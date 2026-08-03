@@ -46,9 +46,3 @@ NFR3 (capacity holds under concurrent registration) achievable.
 Alternate flow A1 shows up in the diagram: when no qualified, available
 faculty member exists, the section is created unassigned and the course is
 added to the unstaffed list instead of aborting the run.
-
-## Re-rendering
-
-```bash
-java -jar tools/plantuml.jar -tpng Lab4_SequenceDiagrams/diagrams/*.puml
-```

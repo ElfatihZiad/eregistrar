@@ -68,9 +68,3 @@ domain model and JPA entities, and boundary classes become Spring MVC
 controllers with their Thymeleaf views. That's the layering set out in the
 architecture document (Lab 3), and it's realised in the Lab 7 eRegistrar
 application.
-
-## Re-rendering
-
-```bash
-java -jar tools/plantuml.jar -tpng Lab5_Collaboration_VOPC/diagrams/*.puml
-```

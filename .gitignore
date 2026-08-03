@@ -4,7 +4,7 @@ build/
 out/
 *.class
 
-# PlantUML jar (22 MB — download it instead, see Lab1_Vision/TOOLS_SETUP.md)
+# PlantUML jar (22 MB, download it instead; see Lab1_Vision/TOOLS_SETUP.md)
 tools/plantuml.jar
 
 # IDE
@@ -36,3 +36,13 @@ lab5.txt
 lab6.txt
 lab7.txt
 Ziad_ElFatih_618971_CS425_Assignments1-5.zip
+
+# Local working notes and build scripts, not part of the submission
+.claude/
+SUBMISSION.md
+Lab2_SRS/GIT_SETUP.md
+tools/md_to_pdf.py
+presentation/build_deck.js
+
+# PlantUML diagram sources kept locally only; rendered PNGs are the deliverable
+*.puml
