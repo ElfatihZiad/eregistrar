@@ -20,3 +20,4 @@ tools/plantuml.jar
 
 # Logs
 *.log
+tools/apache-maven-3.9.9/
