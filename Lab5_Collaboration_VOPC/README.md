@@ -66,8 +66,8 @@ Messages 4.1 through 4.7 are the generation steps performed by
 Control classes become business-layer services, entity classes become the
 domain model and JPA entities, and boundary classes become Spring MVC
 controllers with their Thymeleaf views. That's the layering set out in the
-[architecture document](../Lab3_Architecture/eRegistrar_Architecture.md), and
-it's realised in the Lab 7 eRegistrar application.
+architecture document (Lab 3), and it's realised in the Lab 7 eRegistrar
+application.
 
 ## Re-rendering
 

@@ -3,9 +3,8 @@
 **Course:** CS425, Software Engineering  
 **Student:** Ziad El Fatih, 618971  
 
-First iteration of architectural analysis, based on the
-[Vision Document](../Lab1_Vision/eRegistrar_Vision_Document.md) and the
-[SRS](../Lab2_SRS/eRegistrar_SRS.md).
+First iteration of architectural analysis, based on the Vision Document
+(Lab 1) and the SRS (Lab 2).
 
 ---
 

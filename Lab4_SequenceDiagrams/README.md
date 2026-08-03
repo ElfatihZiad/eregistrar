@@ -3,8 +3,8 @@
 **Project:** eRegistrar  
 **Student:** Ziad El Fatih, 618971  
 
-Sequence diagrams for the two major use cases of the
-[SRS](../Lab2_SRS/eRegistrar_SRS.md), drawn at the analysis level. Every
+Sequence diagrams for the two major use cases of the SRS (Lab 2), drawn at
+the analysis level. Every
 lifeline is stereotyped as **«boundary»**, **«control»** or **«entity»**, and
 messages flow actor → boundary → control → entity, never back up.
 

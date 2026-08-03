@@ -13,8 +13,8 @@ scheduling and registration system for the Computer Science department. It
 covers the use-case model (actors, use-case diagram, and descriptions of the
 major use cases) along with the non-functional requirements.
 
-It follows from the [Vision Document](../Lab1_Vision/eRegistrar_Vision_Document.md)
-and feeds into the architecture (Lab 3) and use-case analysis (Labs 4 and 5).
+It follows from the Vision Document (Lab 1) and feeds into the architecture
+(Lab 3) and use-case analysis (Labs 4 and 5).
 
 **In scope:** faculty profiles, course catalog, schedule generation, and
 student registration. **Out of scope:** admissions, grading, tuition, and room
