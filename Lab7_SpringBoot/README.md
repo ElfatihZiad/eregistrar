@@ -114,14 +114,14 @@ with `java -jar target/<app>-0.0.1-SNAPSHOT.jar`.
 
 ## 6. Submission
 
-- **GitHub.** The lab asks for a repository named `elibrary`. `elibrary/` is
-  ready to be pushed as its own repository; the commands are in
-  [../Lab2_SRS/GIT_SETUP.md](../Lab2_SRS/GIT_SETUP.md). Pushing needs your
-  GitHub account, so it has been left for you to run.
+- **GitHub.** Pushed as its own repository, as the lab asks:
+  <https://github.com/ElfatihZiad/elibrary>. It's kept as a subtree push from
+  this project's repo — see [../Lab2_SRS/GIT_SETUP.md](../Lab2_SRS/GIT_SETUP.md)
+  for how to push again after future changes.
 - **Zip.** Produce the submission archive with:
 
 ```bash
 cd Lab7_SpringBoot && zip -r elibrary.zip elibrary -x '*/target/*'
 ```
 
-- Submit the zip and the repository URL in Sakai.
+- Submit the zip and <https://github.com/ElfatihZiad/elibrary> in Sakai.

@@ -1,64 +1,42 @@
 # Lab 2, Part 2 — Git and GitHub Setup
 
-## Local repository
+## Repositories
 
-All CS425 project artifacts — documents, PlantUML sources, rendered diagrams and
-source code for Labs 6 and 7 — are version-controlled in a single Git repository
-rooted at this project folder (`CS425/`).
+| Repo | Visibility | URL | Contents |
+|---|---|---|---|
+| `eregistrar` | Private | <https://github.com/ElfatihZiad/eregistrar> | The whole project — Labs 1–7 |
+| `elibrary` | Public | <https://github.com/ElfatihZiad/elibrary> | Lab 7's eLibrary app only (its own repo, as the lab asks) |
+
+Both are pushed and current as of the last commit.
+
+## How they're kept in sync
+
+The local repository at the CS425 project root is the single source of truth.
+`elibrary` is a **subtree** of it — `Lab7_SpringBoot/elibrary/` pushed on its
+own, not a separate checkout — so there's one history to maintain, not two.
 
 ```bash
 git -C ~/Projects/CS425 log --oneline
 ```
 
-`tools/plantuml.jar` is excluded by `.gitignore` because of its size; the
-download command is in [../Lab1_Vision/TOOLS_SETUP.md](../Lab1_Vision/TOOLS_SETUP.md).
-
-## Publishing to GitHub
-
-The repository has not been pushed to GitHub — that needs your account, so run
-these three commands yourself after creating an empty repository named
-`eregistrar` (no README, no .gitignore) at <https://github.com/new>:
-
-```bash
-git -C ~/Projects/CS425 remote add origin https://github.com/<your-github-username>/eregistrar.git
-```
-
-```bash
-git -C ~/Projects/CS425 branch -M main
-```
-
-```bash
-git -C ~/Projects/CS425 push -u origin main
-```
-
-Then replace `<your-github-username>` in the repository URL at the top of
-[eRegistrar_SRS.md](eRegistrar_SRS.md) with your actual username, and commit that
-change.
-
-If you have the GitHub CLI installed and authenticated (`gh auth status`), the
-first two steps collapse into one command:
-
-```bash
-gh repo create eregistrar --private --source ~/Projects/CS425 --remote origin --push
-```
-
-Lab 7 asks for a separate repository named `elibrary`. The eLibrary application
-lives inside this same repository at `Lab7_SpringBoot/elibrary/`, so publish it
-as its own repository by pushing that subtree — no nested Git repository, and
-the history stays in one place:
-
-```bash
-git -C ~/Projects/CS425 remote add elibrary https://github.com/<your-github-username>/elibrary.git
-```
-
-```bash
-git -C ~/Projects/CS425 subtree push --prefix=Lab7_SpringBoot/elibrary elibrary main
-```
+`tools/plantuml.jar` and `tools/apache-maven-3.9.9/` are excluded by
+`.gitignore` because of their size; see
+[../Lab1_Vision/TOOLS_SETUP.md](../Lab1_Vision/TOOLS_SETUP.md) for the download
+commands. Instructor-provided reference material (`lessons/`, the sample
+documents) is also excluded — it's not your work, so it isn't pushed, but it
+stays on disk for you to consult.
 
 ## Working practice for the rest of the course
 
-Commit after each lab deliverable, and push regularly:
+After each lab, commit and push both remotes:
 
 ```bash
-git -C ~/Projects/CS425 add -A && git -C ~/Projects/CS425 commit -m "Lab N: <what changed>" && git -C ~/Projects/CS425 push
+git -C ~/Projects/CS425 add -A && git -C ~/Projects/CS425 commit -m "Lab N: <what changed>" && git -C ~/Projects/CS425 push origin main
+```
+
+If a change touches `Lab7_SpringBoot/elibrary/`, also push the subtree so the
+public repo stays current:
+
+```bash
+git -C ~/Projects/CS425 subtree push --prefix=Lab7_SpringBoot/elibrary elibrary main
 ```

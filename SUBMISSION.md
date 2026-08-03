@@ -3,14 +3,12 @@
 **Student:** Ziad El Fatih — 618971
 **Project:** eRegistrar
 
-Before submitting anything, do these two things once:
+Both repos are created and pushed — nothing left to set up before submitting:
 
-1. Create the GitHub repository and push (commands in [Lab2_SRS/GIT_SETUP.md](Lab2_SRS/GIT_SETUP.md)).
-2. Replace `<your-github-username>` in [Lab2_SRS/eRegistrar_SRS.md](Lab2_SRS/eRegistrar_SRS.md)
-   with your real username, then regenerate the SRS PDF:
-   ```bash
-   python3 tools/md_to_pdf.py Lab2_SRS/eRegistrar_SRS.md
-   ```
+| Repo | URL |
+|---|---|
+| `eregistrar` (private, whole project) | <https://github.com/ElfatihZiad/eregistrar> |
+| `elibrary` (public, Lab 7 subtree) | <https://github.com/ElfatihZiad/elibrary> |
 
 ---
 
@@ -62,7 +60,8 @@ with numbered messages on the collaboration diagrams.
 
 ## Lab 6 — Java Setup and Coding Exercises
 
-**Upload:** the GitHub repository URL, as text, in the Sakai assignment.
+**Upload:** the GitHub repository URL, as text, in the Sakai assignment —
+`https://github.com/ElfatihZiad/eregistrar`
 
 Everything the lab asks to see is committed in the repo:
 
@@ -79,7 +78,8 @@ evidence image, and commit.
 
 ## Lab 7 — Spring Boot Applications
 
-**Upload:** two things — the zip of the eLibrary project, and the repo URL as text.
+**Upload:** two things — the zip of the eLibrary project, and the repo URL as
+text — `https://github.com/ElfatihZiad/elibrary`
 
 ```bash
 cd Lab7_SpringBoot && zip -r elibrary.zip elibrary -x '*/target/*'
@@ -91,7 +91,7 @@ Checklist the lab grades:
 - ✅ `screenshots/` folder inside the project, with the homepage screenshot
 - ✅ DevTools + LiveReload configured
 - ✅ Second app `eregistrar` built from scratch with its own content
-- ⬜ Repo named `elibrary` on your GitHub (subtree push command in GIT_SETUP.md)
+- ✅ Repo named `elibrary` on GitHub, pushed
 
 ---
 

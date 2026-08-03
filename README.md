@@ -9,6 +9,10 @@ workflow from vision to use-case analysis. Lab 6 is the Java environment and
 coding exercises. Lab 7 implements two Spring Boot web applications, one of
 which is the first implementation slice of eRegistrar itself.
 
+**GitHub:**
+[eregistrar](https://github.com/ElfatihZiad/eregistrar) (private, whole project) ·
+[elibrary](https://github.com/ElfatihZiad/elibrary) (public, Lab 7 subtree)
+
 ## Deliverables by lab
 
 **→ [SUBMISSION.md](SUBMISSION.md) tells you exactly what file to upload for each lab.**
