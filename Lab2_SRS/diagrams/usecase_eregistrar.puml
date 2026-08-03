@@ -4,63 +4,35 @@ left to right direction
 skinparam packageStyle rectangle
 skinparam actorStyle awesome
 skinparam shadowing false
-title eRegistrar — System Use Case Model
+title eRegistrar — Use Case Model
 
 actor "Student" as Student
 actor "Faculty" as Faculty
 actor "Registrar\n(Administrator)" as Admin
-actor "Identity Provider" as IdP <<external>>
-actor "Student Information\nSystem (SIS)" as SIS <<external>>
 
 rectangle "eRegistrar" {
-
   usecase "UC1\nManage Faculty Profile" as UC1
   usecase "UC2\nManage Course Catalog" as UC2
   usecase "UC3\nGenerate Term Schedule" as UC3
-  usecase "UC4\nAssign Faculty to Section" as UC4
-  usecase "UC5\nPublish Schedule" as UC5
-  usecase "UC6\nRegister for Course" as UC6
-  usecase "UC7\nDrop Course" as UC7
-  usecase "UC8\nView Schedule" as UC8
-  usecase "UC9\nView Class Roster" as UC9
-  usecase "UC10\nLogin / Authenticate" as UC10
-  usecase "UC11\nGenerate Enrolment Report" as UC11
-
-  usecase "Validate\nRegistration Rules" as UCV
-  usecase "Detect Assignment\nConflict" as UCC
-  usecase "Notify Affected\nUsers" as UCN
+  usecase "UC4\nRegister for Course" as UC4
+  usecase "UC5\nDrop Course" as UC5
+  usecase "UC6\nView Schedule" as UC6
 }
 
 Faculty --> UC1
-Faculty --> UC8
-Faculty --> UC9
+Faculty --> UC6
 
 Admin --> UC1
 Admin --> UC2
 Admin --> UC3
-Admin --> UC4
-Admin --> UC5
-Admin --> UC11
-Admin --> UC6 : <<on behalf of a student>>
 
+Student --> UC4
+Student --> UC5
 Student --> UC6
-Student --> UC7
-Student --> UC8
 
-UC1 ..> UC10 : <<include>>
-UC2 ..> UC10 : <<include>>
-UC3 ..> UC10 : <<include>>
-UC6 ..> UC10 : <<include>>
-UC7 ..> UC10 : <<include>>
-
-UC6 ..> UCV : <<include>>
-UC7 ..> UCV : <<include>>
-UC3 ..> UCC : <<include>>
-UC4 ..> UCC : <<include>>
-UC5 ..> UCN : <<include>>
-
-UC10 --> IdP
-UC5 --> SIS : <<publishes to>>
-UC11 --> SIS
+UC3 ..> UC1 : <<uses>>
+UC3 ..> UC2 : <<uses>>
+UC4 ..> UC3 : <<uses>>
+UC5 ..> UC4 : <<extends>>
 
 @enduml

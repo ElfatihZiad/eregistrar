@@ -1,8 +1,8 @@
-@startuml vopc_uc6_register_for_course
+@startuml vopc_uc4_register_for_course
 !pragma layout smetana
 skinparam shadowing false
 skinparam classAttributeIconSize 0
-title UC6 — Register for Course — VOPC (View of Participating Classes)
+title UC4 — Register for Course — VOPC (View of Participating Classes)
 
 class RegistrationPage <<boundary>> {
   +displaySchedule(sections)

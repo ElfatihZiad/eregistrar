@@ -1,7 +1,7 @@
-@startuml sd_uc6_register_for_course
+@startuml sd_uc4_register_for_course
 skinparam shadowing false
 skinparam sequenceMessageAlign left
-title UC6 — Register for Course (Basic Flow) — Analysis-level Sequence Diagram
+title UC4 — Register for Course (Basic Flow) — Analysis-level Sequence Diagram
 
 actor "Student" as Student
 boundary "RegistrationPage\n<<boundary>>" as UI
@@ -63,7 +63,7 @@ StudentE --> Validator : existing registrations
 deactivate StudentE
 
 note right of Validator
-  Checks, in order (BR11–BR15):
+  Checks, in order (BR6–BR9):
   1. prerequisites completed
   2. seat available
   3. no time conflict in the block
@@ -87,7 +87,7 @@ note right of Section
   registration insert, with
   optimistic locking on the
   section — capacity can never
-  be exceeded (NFR3, BR12).
+  be exceeded (NFR3, BR7).
 end note
 Section --> Ctrl : ok
 deactivate Section

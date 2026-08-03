@@ -158,7 +158,7 @@ function card(slide, x, y, w, h, fill = LIGHT) {
     ["F4", "Assignment Conflict Detection", "No double-booking, no unqualified assignment — checked, not trusted"],
     ["F5", "Online Student Registration", "Students register themselves and get an immediate answer"],
     ["F6", "Registration Rule Enforcement", "Prerequisites, capacity, time conflicts and course load enforced at submit"],
-    ["F9", "Role-Based Access", "Single sign-on with Admin, Faculty and Student roles"],
+    ["F8", "Role-Based Access", "Single sign-on with Admin, Faculty and Student roles"],
   ];
   let y = 1.5;
   feats.forEach(([id, name, desc], i) => {
@@ -182,7 +182,7 @@ function card(slide, x, y, w, h, fill = LIGHT) {
       fontFace: BODY, fontSize: 12, color: MUTED, margin: 0, lineSpacingMultiple: 1.1,
     });
   });
-  s.addText("Ten features in total; these six are the ones the architecture has to satisfy.", {
+  s.addText("Eight features in total; these six are the ones the architecture has to satisfy.", {
     x: 0.6, y: 6.75, w: 9.0, h: 0.3,
     fontFace: BODY, fontSize: 12, color: MUTED, italic: true, margin: 0,
   });
@@ -220,7 +220,7 @@ function card(slide, x, y, w, h, fill = LIGHT) {
     });
     y += 0.82;
   });
-  s.addText("11 use cases identified. UC1, UC3, UC4 and UC6 are described in full and carried into analysis.", {
+  s.addText("6 use cases identified. UC3 and UC4 are described in full and carried into analysis.", {
     x: 6.85, y: 6.05, w: 5.85, h: 0.6,
     fontFace: BODY, fontSize: 12, color: INK, italic: true, margin: 0,
   });
@@ -229,7 +229,7 @@ function card(slide, x, y, w, h, fill = LIGHT) {
 
 // ---------------------------------------------------------------- slide 5
 {
-  const s = lightSlide("UC6 — Register for Course", "Lab 2 — Use-case description");
+  const s = lightSlide("UC4 — Register for Course", "Lab 2 — Use-case description");
   s.addText("Basic flow", {
     x: 0.6, y: 1.35, w: 5.9, h: 0.35,
     fontFace: BODY, fontSize: 16, bold: true, color: INK, margin: 0,
@@ -252,7 +252,7 @@ function card(slide, x, y, w, h, fill = LIGHT) {
   });
 
   card(s, 7.1, 1.35, 5.6, 4.05, LIGHT);
-  s.addText("Rules enforced (BR11–BR15)", {
+  s.addText("Rules enforced (BR6–BR9)", {
     x: 7.4, y: 1.55, w: 5.0, h: 0.35,
     fontFace: BODY, fontSize: 15, bold: true, color: TEAL, margin: 0,
   });
@@ -262,8 +262,7 @@ function card(slide, x, y, w, h, fill = LIGHT) {
     "No overlapping registration in the block",
     "Course load within the student's category limit",
     "No duplicate registration for the course",
-    "Registration window open (registrar may override, recorded)",
-  ];
+    ];
   s.addText(rules.map((t, i) => ({
     text: t, options: { bullet: true, breakLine: i < rules.length - 1 },
   })), {
@@ -283,12 +282,11 @@ function card(slide, x, y, w, h, fill = LIGHT) {
 {
   const s = lightSlide("Architectural decision", "Lab 3 — Architecture");
   const cands = [
-    ["Two-tier client/server", "Rejected", "Installed client and DB credentials on the desktop", "C43D3D"],
-    ["Monolithic single layer", "Rejected", "Volatile scheduling rules scattered through the UI code", "C43D3D"],
-    ["Microservices", "Deferred", "Distributed transaction across the capacity check; too costly for the team", "B8860B"],
+    ["Monolithic single layer", "Rejected", "Volatile scheduling rules scattered through the page code", "C43D3D"],
+    ["Microservices", "Rejected", "Capacity check becomes a distributed transaction; too costly for the team", "C43D3D"],
     ["Layered web architecture", "Selected", "Isolates the rules, keeps registration in one local transaction, one server", TEAL],
   ];
-  let y = 1.5;
+  let y = 1.75;
   cands.forEach(([name, verdict, why, colour]) => {
     card(s, 0.6, y, 12.1, 1.12, name.startsWith("Layered") ? "E6F5F3" : LIGHT);
     s.addText(name, {
@@ -343,9 +341,9 @@ function card(slide, x, y, w, h, fill = LIGHT) {
 
 // ---------------------------------------------------------------- slide 8
 {
-  const s = lightSlide("Use-case realisation — UC6", "Lab 4 — Sequence diagram");
+  const s = lightSlide("Use-case realisation — UC4", "Lab 4 — Sequence diagram");
   s.addImage({
-    path: path.join(ROOT, "Lab4_SequenceDiagrams/diagrams/sd_uc6_register_for_course.png"),
+    path: path.join(ROOT, "Lab4_SequenceDiagrams/diagrams/sd_uc4_register_for_course.png"),
     x: 0.75, y: 1.25, w: 6.05, h: 5.6,
   });
   card(s, 7.3, 1.4, 5.4, 2.35, LIGHT);
@@ -382,11 +380,11 @@ function card(slide, x, y, w, h, fill = LIGHT) {
 {
   const s = lightSlide("Participating classes — VOPC", "Lab 5 — Collaboration & VOPC");
   s.addImage({
-    path: path.join(ROOT, "Lab5_Collaboration_VOPC/diagrams/vopc_uc6_register_for_course.png"),
+    path: path.join(ROOT, "Lab5_Collaboration_VOPC/diagrams/vopc_uc4_register_for_course.png"),
     x: 0.7, y: 1.25, w: 4.0, h: 5.6,
   });
   s.addImage({
-    path: path.join(ROOT, "Lab5_Collaboration_VOPC/diagrams/collab_uc6_register_for_course.png"),
+    path: path.join(ROOT, "Lab5_Collaboration_VOPC/diagrams/collab_uc4_register_for_course.png"),
     x: 5.15, y: 1.6, w: 7.55, h: 3.9,
   });
   s.addText("VOPC — structure", {
@@ -461,7 +459,7 @@ function card(slide, x, y, w, h, fill = LIGHT) {
   });
   const chain = [
     ["Vision", "10 features from the problem–need–feature table"],
-    ["SRS", "11 use cases, 4 described in full, 12 NFRs"],
+    ["SRS", "6 use cases, 2 described in full, 6 NFRs"],
     ["Architecture", "Layered, 5 subsystems, acyclic dependencies"],
     ["Analysis", "Sequence, collaboration and VOPC per use case"],
     ["Code", "Two Spring Boot apps, tests green"],

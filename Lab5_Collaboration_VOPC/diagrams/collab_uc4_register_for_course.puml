@@ -1,4 +1,4 @@
-@startuml collab_uc6_register_for_course
+@startuml collab_uc4_register_for_course
 !pragma layout smetana
 skinparam shadowing false
 skinparam object {
@@ -7,7 +7,7 @@ skinparam object {
   BackgroundColor<<control>> #FFF8E1
   BackgroundColor<<entity>> #E8F5E9
 }
-title UC6 — Register for Course — Collaboration (Communication) Diagram
+title UC4 — Register for Course — Collaboration (Communication) Diagram
 
 object "Student" as Student <<actor>>
 object "aRegistrationPage" as UI <<boundary>>
@@ -33,7 +33,7 @@ UI --> Student : 7: displayConfirmation()
 
 note bottom of Validator
   3.1–3.5 realise business rules
-  BR11–BR15. A failure at any step
+  BR6–BR9. A failure at any step
   aborts the collaboration before
   message 4.
 end note

@@ -11,36 +11,41 @@ which is the first implementation slice of eRegistrar itself.
 
 ## Deliverables by lab
 
-| Lab | Deliverable | Folder |
+**→ [SUBMISSION.md](SUBMISSION.md) tells you exactly what file to upload for each lab.**
+
+| Lab | Deliverable (submit the PDF) | Folder |
 |---|---|---|
-| **1** | Vision Document (problem statement, problem–need–feature table, stakeholders, product overview) and development tools setup | [Lab1_Vision/](Lab1_Vision/) |
-| **2** | System Requirements Specification: use-case diagram, use-case descriptions for the major use cases, supplementary requirements, Git/GitHub setup | [Lab2_SRS/](Lab2_SRS/) |
-| **3** | Architectural analysis and initial high-level system architecture (layered) with a deployment view | [Lab3_Architecture/](Lab3_Architecture/) |
-| **4** | Sequence diagrams for the significant use cases, with boundary/control/entity analysis classes | [Lab4_SequenceDiagrams/](Lab4_SequenceDiagrams/) |
-| **5** | Collaboration (communication) diagrams and VOPC class diagrams | [Lab5_Collaboration_VOPC/](Lab5_Collaboration_VOPC/) |
-| **6** | Java environment setup evidence and the coding practice exercises (Student records app, `printHelloWorld`, `findSecondBiggest`) | [Lab6_Java_Setup_and_Coding/](Lab6_Java_Setup_and_Coding/) |
-| **7** | Spring Boot applications: **eLibrary** (renamed banner) and **eRegistrar**, both running with tests and screenshots | [Lab7_SpringBoot/](Lab7_SpringBoot/) |
-| **2 (cont.)** | Requirements/Design presentation deck | [presentation/](presentation/) |
+| **1** | Vision Document — problem statement, problem–need–feature table, stakeholders | [Lab1_Vision/](Lab1_Vision/) |
+| **2** | SRS — use-case diagram, 6 use cases, UC3 + UC4 described in full, NFRs, GitHub URL | [Lab2_SRS/](Lab2_SRS/) |
+| **3** | High-level system architecture (layered) with constraints and subsystems | [Lab3_Architecture/](Lab3_Architecture/) |
+| **4** | Sequence diagrams for UC3 and UC4, with boundary/control/entity classes | [Lab4_SequenceDiagrams/](Lab4_SequenceDiagrams/) |
+| **5** | Collaboration + VOPC diagrams for UC3 and UC4 | [Lab5_Collaboration_VOPC/](Lab5_Collaboration_VOPC/) |
+| **6** | Java setup evidence and the coding exercises (submit the repo URL) | [Lab6_Java_Setup_and_Coding/](Lab6_Java_Setup_and_Coding/) |
+| **7** | eLibrary and eRegistrar Spring Boot apps (submit the zip + repo URL) | [Lab7_SpringBoot/](Lab7_SpringBoot/) |
+| **later** | 10-minute requirements/design presentation | [presentation/](presentation/) |
+
+Each Labs 1–5 folder holds the Markdown source, the PlantUML diagram sources,
+the rendered PNGs, and the submission-ready PDF.
 
 ## Reading order
 
-1. [Vision Document](Lab1_Vision/eRegistrar_Vision_Document.md) — the problem and the feature set
-2. [SRS](Lab2_SRS/eRegistrar_SRS.md) — actors, use-case model, use-case descriptions, NFRs
-3. [Architecture](Lab3_Architecture/eRegistrar_Architecture.md) — constraints, candidates considered, selected layered architecture
-4. [Sequence diagrams](Lab4_SequenceDiagrams/README.md) — use-case realisations over time
-5. [Collaboration & VOPC](Lab5_Collaboration_VOPC/README.md) — the same realisations by object links, plus participating classes
+1. [Vision Document](Lab1_Vision/eRegistrar_Vision_Document.md) — the problem and the eight features
+2. [SRS](Lab2_SRS/eRegistrar_SRS.md) — actors, six use cases, UC3 and UC4 in full, NFRs
+3. [Architecture](Lab3_Architecture/eRegistrar_Architecture.md) — constraints, chosen layered architecture, subsystems
+4. [Sequence diagrams](Lab4_SequenceDiagrams/README.md) — UC3 and UC4 realised over time
+5. [Collaboration & VOPC](Lab5_Collaboration_VOPC/README.md) — the same two use cases by object links, plus participating classes
 6. [Lab 6 coding exercises](Lab6_Java_Setup_and_Coding/README.md)
 7. [Lab 7 Spring Boot apps](Lab7_SpringBoot/README.md)
 
 ## Traceability
 
-The artifacts form one chain: each feature in the Vision document maps to use
-cases in the SRS (§6 of the SRS), each significant use case has a sequence
-diagram (Lab 4) and a collaboration + VOPC pair (Lab 5), and the analysis
-classes from Lab 5 map onto the subsystems of the Lab 3 architecture — control
-classes become business-layer services, entity classes become the domain model,
-boundary classes become Spring MVC controllers and their templates, as realised
-in the Lab 7 eRegistrar application.
+The artifacts form one chain: each of the eight features in the Vision document
+maps to use cases in the SRS (§6), the two significant use cases (UC3 Generate
+Term Schedule, UC4 Register for Course) each have a sequence diagram (Lab 4) and
+a collaboration + VOPC pair (Lab 5), and the analysis classes map onto the
+subsystems of the Lab 3 architecture — control classes become business-layer
+services, entity classes become the domain model, boundary classes become Spring
+MVC controllers and their templates, as realised in the Lab 7 eRegistrar app.
 
 ## Tooling
 
@@ -56,10 +61,10 @@ in the Lab 7 eRegistrar application.
 copies — see [Lab1_Vision/TOOLS_SETUP.md](Lab1_Vision/TOOLS_SETUP.md) for how to
 fetch them.
 
-### Regenerating every diagram
+### Regenerating diagrams and PDFs
 
 ```bash
-java -jar tools/plantuml.jar -tpng Lab*/diagrams/*.puml
+java -jar tools/plantuml.jar -tpng Lab*/diagrams/*.puml && python3 tools/md_to_pdf.py
 ```
 
 ## Source material

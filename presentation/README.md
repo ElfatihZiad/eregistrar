@@ -15,10 +15,10 @@ the artifacts from Labs 1–5 plus the Lab 7 implementation slice.
 | 2 | The problem | Vision §1, §2.1 | 1:15 |
 | 3 | Features driving the design | Problem–Need–Feature table | 1:00 |
 | 4 | Use-case model | Use-case diagram + actors | 1:15 |
-| 5 | UC6 — Register for Course | Use-case description, business rules | 1:15 |
+| 5 | UC4 — Register for Course | Use-case description, business rules | 1:15 |
 | 6 | Architectural decision | Candidates considered and why | 1:10 |
 | 7 | Layered architecture | Architecture diagram | 1:10 |
-| 8 | Use-case realisation | UC6 sequence diagram | 1:15 |
+| 8 | Use-case realisation | UC4 sequence diagram | 1:15 |
 | 9 | Participating classes | VOPC + collaboration diagrams | 1:00 |
 | 10 | Already running | eRegistrar app screenshot, roadmap | 0:50 |
 | 11 | From vision to running code | Traceability chain, close | 0:30 |

@@ -46,7 +46,7 @@ loop for each required course in each block
     deactivate Course
 
     note right of Generator
-      BR7: 400-level prerequisite courses are
+      BR5: 400-level prerequisite courses are
       placed in earlier blocks, the dependent
       500-level courses in later blocks.
     end note
@@ -68,7 +68,7 @@ loop for each required course in each block
         activate Faculty
         Faculty --> Checker : assignments
         deactivate Faculty
-        alt no conflict (BR5, BR6)
+        alt no conflict (BR3, BR4)
             Checker --> Generator : ok
             Generator -> Section : assignFaculty(faculty)
             activate Section

@@ -64,9 +64,9 @@ Directory: [eregistrar/](eregistrar/) · package `edu.mum.cs.cs425.eregistrar`
 
 Built from scratch following the same steps, with its own content: the homepage
 shows a published term schedule — course, title, block, assigned faculty and
-remaining seats — which is the read-only half of use case **UC6 (Register for
+remaining seats — which is the read-only half of use case **UC4 (Register for
 Course)** from the [SRS](../Lab2_SRS/eRegistrar_SRS.md). Sections that are full
-are marked as such, which is the capacity rule (BR12) made visible. The data is
+are marked as such, which is the capacity rule (BR7) made visible. The data is
 static sample data at this stage; persistence and the registration transaction
 belong to the next iteration.
 
