@@ -1,7 +1,7 @@
-# System Architecture — **eRegistrar**
+# System Architecture: eRegistrar
 
-**Course:** CS425 — Software Engineering  
-**Student:** Ziad El Fatih — 618971  
+**Course:** CS425, Software Engineering  
+**Student:** Ziad El Fatih, 618971  
 
 First iteration of architectural analysis, based on the
 [Vision Document](../Lab1_Vision/eRegistrar_Vision_Document.md) and the
@@ -24,18 +24,19 @@ First iteration of architectural analysis, based on the
 
 ## 2. Architecture Selected
 
-A **layered web architecture**: Presentation → Business (subsystems) → Domain
-Model → Data Access, with external systems behind adapters. Dependencies point
-downwards only.
+A **layered web architecture**: Presentation, then Business (subsystems), then
+Domain Model, then Data Access, with external systems behind adapters.
+Dependencies point downwards only.
 
 Two alternatives were considered and rejected. A **monolithic single-layer**
-application would be quickest to build but would scatter the volatile
+application would be quickest to build, but it would scatter the volatile
 scheduling and registration rules through the page code, failing C7.
 **Microservices** would allow independent scaling, but splitting registration
-from scheduling turns the capacity check into a distributed transaction — a
-direct threat to C5 — and the operational cost is not affordable under C8. The
-layered design keeps registration inside one local transaction while still
-drawing subsystem boundaries along which services could be extracted later.
+from scheduling turns the capacity check into a distributed transaction. That's
+a direct threat to C5, and the operational cost isn't affordable under C8
+anyway. The layered design keeps registration inside one local transaction
+while still drawing subsystem boundaries along which services could be
+extracted later.
 
 ![Layered architecture](diagrams/architecture_layers.png)
 
@@ -46,7 +47,7 @@ drawing subsystem boundaries along which services could be extracted later.
 | **Presentation** | HTTP handling, view rendering, authentication and role checks | Spring MVC controllers, Thymeleaf views, Spring Security |
 | **Business** | All business rules and transaction boundaries, split into subsystems | Faculty Profile, Catalog, Scheduling, Registration, Notification |
 | **Domain model** | The concepts and invariants of the problem, independent of frameworks | Faculty, Course, Section, Student, Registration, Schedule |
-| **Data access** | Persistence and queries — the only layer that knows SQL | Spring Data JPA repositories, MySQL/PostgreSQL |
+| **Data access** | Persistence and queries. The only layer that knows SQL | Spring Data JPA repositories, MySQL/PostgreSQL |
 | **External** | Systems outside our control, reached through adapters | Campus identity provider, SIS, SMTP |
 
 ## 4. Subsystems
@@ -59,24 +60,25 @@ drawing subsystem boundaries along which services could be extracted later.
 | **Registration** | Registrations, rule validation, seat management | `RegistrationService` | Catalog, Scheduling |
 | **Notification** | Notifying affected users of schedule changes | `NotificationService` | SMTP adapter |
 
-The dependency graph is acyclic — Registration → Scheduling → {Faculty Profile,
-Catalog} — which is what makes the subsystems separately testable.
+The dependency graph is acyclic. Registration depends on Scheduling, which
+depends on Faculty Profile and Catalog, and nothing depends back the other
+way. That's what makes the subsystems separately testable.
 
 ## 5. Key Mechanisms
 
 | Mechanism | Approach |
 |---|---|
 | **Persistence** | JPA/Hibernate through Spring Data repositories |
-| **Transactions** | Declarative (`@Transactional`) at the business-service boundary; one registration = one transaction |
-| **Concurrency** | Optimistic locking (`@Version`) on `Section`; the seat check and the seat decrement share a transaction, so capacity can never be exceeded (NFR3, BR7) |
-| **Security** | Single sign-on against the campus identity provider; roles Admin/Faculty/Student; authorization re-checked in the business layer |
-| **Validation** | Input format checked in the presentation layer; business rules enforced only in the business layer |
-| **External integration** | Identity provider, SIS and SMTP behind adapter interfaces, stubbed during development |
+| **Transactions** | Declarative (`@Transactional`) at the business-service boundary. One registration equals one transaction. |
+| **Concurrency** | Optimistic locking (`@Version`) on `Section`. The seat check and the seat decrement share a transaction, so capacity can never be exceeded (NFR3, BR7). |
+| **Security** | Single sign-on against the campus identity provider, with roles Admin/Faculty/Student and authorization re-checked in the business layer |
+| **Validation** | Input format is checked in the presentation layer; business rules are enforced only in the business layer |
+| **External integration** | Identity provider, SIS and SMTP sit behind adapter interfaces, stubbed during development |
 
 ## 6. Risks
 
 | # | Risk | Mitigation |
 |---|---|---|
-| R1 | Schedule generation gets harder as constraints multiply | Iteration 1 uses greedy assignment and reports unstaffed courses explicitly; measure before considering a constraint solver |
-| R2 | Contention on popular sections at the registration peak | Optimistic locking with short transactions; load-test the registration path before the first live window |
+| R1 | Schedule generation gets harder as constraints multiply | Iteration 1 uses greedy assignment and reports unstaffed courses explicitly. Measure before considering a constraint solver. |
+| R2 | Contention on popular sections at the registration peak | Optimistic locking with short transactions. Load-test the registration path before the first live window. |
 | R3 | SIS integration details are unknown | Adapter interface with a stub, so the core flows are demonstrable without it |

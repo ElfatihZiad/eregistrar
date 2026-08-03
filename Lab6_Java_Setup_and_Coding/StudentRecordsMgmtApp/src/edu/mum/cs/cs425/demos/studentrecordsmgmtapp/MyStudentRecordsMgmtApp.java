@@ -11,7 +11,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * CS425 Lab 6 — Student records management, plus the two further coding
+ * CS425 Lab 6: Student records management, plus the two further coding
  * practice exercises (printHelloWorld and findSecondBiggest).
  *
  * Ziad El Fatih (618971)

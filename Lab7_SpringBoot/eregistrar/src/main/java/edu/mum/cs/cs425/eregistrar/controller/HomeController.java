@@ -12,8 +12,8 @@ import java.util.List;
 /**
  * Serves the eRegistrar homepage.
  *
- * The content shown here is the published-schedule view of use case UC6 from
- * the SRS, rendered from static sample data — the persistence and registration
+ * The content shown here is the published-schedule view of use case UC4 from
+ * the SRS, rendered from static sample data. The persistence and registration
  * logic come in later iterations.
  */
 @Controller
@@ -27,7 +27,7 @@ public class HomeController {
         model.addAttribute("banner", BANNER);
         model.addAttribute("today",
                 LocalDate.now().format(DateTimeFormatter.ofPattern("MMMM d, yyyy")));
-        model.addAttribute("term", "Fall 2026 — Entry 3");
+        model.addAttribute("term", "Fall 2026, Entry 3");
         model.addAttribute("sections", sampleSections());
         return "index";
     }

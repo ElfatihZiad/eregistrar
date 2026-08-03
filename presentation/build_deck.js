@@ -20,7 +20,7 @@ const BODY = "Calibri";
 const pres = new pptxgen();
 pres.layout = "LAYOUT_WIDE"; // 13.3 x 7.5
 pres.author = "Ziad El Fatih";
-pres.title = "eRegistrar — Requirements and Design";
+pres.title = "eRegistrar: Requirements and Design";
 
 const W = 13.3, H = 7.5;
 
@@ -95,7 +95,7 @@ function card(slide, x, y, w, h, fill = LIGHT) {
 
 // ---------------------------------------------------------------- slide 2
 {
-  const s = lightSlide("The problem", "Lab 1 — Vision");
+  const s = lightSlide("The problem", "Lab 1: Vision");
   const stats = [
     ["4", "entries per year", "up from 3, each needing its own schedule"],
     ["100–130", "students per entry", "registering by paper form, re-keyed by staff"],
@@ -142,7 +142,7 @@ function card(slide, x, y, w, h, fill = LIGHT) {
     x: 7.8, y: 4.15, w: 4.6, h: 0.35,
     fontFace: BODY, fontSize: 14, bold: true, color: MINT, margin: 0,
   });
-  s.addText("One system holding courses, faculty profiles, programs and the schedule in a single database — applying the scheduling and prerequisite rules automatically, with role-appropriate web access for administrators, faculty and students.", {
+  s.addText("One system holding courses, faculty profiles, programs and the schedule in a single database, applying the scheduling and prerequisite rules automatically, with role-appropriate web access for administrators, faculty and students.", {
     x: 7.8, y: 4.6, w: 4.6, h: 1.6,
     fontFace: BODY, fontSize: 13, color: WHITE, margin: 0, lineSpacingMultiple: 1.15,
   });
@@ -151,11 +151,11 @@ function card(slide, x, y, w, h, fill = LIGHT) {
 
 // ---------------------------------------------------------------- slide 3
 {
-  const s = lightSlide("Features driving the design", "Lab 1 — Problem / Need / Feature");
+  const s = lightSlide("Features driving the design", "Lab 1: Problem / Need / Feature");
   const feats = [
     ["F1", "Faculty Profile Management", "Faculty own their specializations, teachable courses and block availability"],
     ["F3", "Schedule Generation", "Draft schedule built from program requirements, qualification and availability"],
-    ["F4", "Assignment Conflict Detection", "No double-booking, no unqualified assignment — checked, not trusted"],
+    ["F4", "Assignment Conflict Detection", "No double-booking, no unqualified assignment. Checked, not trusted."],
     ["F5", "Online Student Registration", "Students register themselves and get an immediate answer"],
     ["F6", "Registration Rule Enforcement", "Prerequisites, capacity, time conflicts and course load enforced at submit"],
     ["F8", "Role-Based Access", "Single sign-on with Admin, Faculty and Student roles"],
@@ -191,7 +191,7 @@ function card(slide, x, y, w, h, fill = LIGHT) {
 
 // ---------------------------------------------------------------- slide 4
 {
-  const s = lightSlide("Use-case model", "Lab 2 — SRS");
+  const s = lightSlide("Use-case model", "Lab 2: SRS");
   s.addImage({
     path: path.join(ROOT, "Lab2_SRS/diagrams/usecase_eregistrar.png"),
     x: 0.6, y: 1.35, w: 5.75, h: 5.2,
@@ -229,7 +229,7 @@ function card(slide, x, y, w, h, fill = LIGHT) {
 
 // ---------------------------------------------------------------- slide 5
 {
-  const s = lightSlide("UC4 — Register for Course", "Lab 2 — Use-case description");
+  const s = lightSlide("UC4: Register for Course", "Lab 2: Use-case description");
   s.addText("Basic flow", {
     x: 0.6, y: 1.35, w: 5.9, h: 0.35,
     fontFace: BODY, fontSize: 16, bold: true, color: INK, margin: 0,
@@ -239,7 +239,7 @@ function card(slide, x, y, w, h, fill = LIGHT) {
     "System shows the published schedule with remaining seats",
     "Student selects a section and confirms",
     "System validates every rule before accepting",
-    "Registration is created and a seat consumed — in one transaction",
+    "Registration is created and a seat consumed, in one transaction",
   ];
   let y = 1.85;
   steps.forEach((t, i) => {
@@ -280,7 +280,7 @@ function card(slide, x, y, w, h, fill = LIGHT) {
 
 // ---------------------------------------------------------------- slide 6
 {
-  const s = lightSlide("Architectural decision", "Lab 3 — Architecture");
+  const s = lightSlide("Architectural decision", "Lab 3: Architecture");
   const cands = [
     ["Monolithic single layer", "Rejected", "Volatile scheduling rules scattered through the page code", "C43D3D"],
     ["Microservices", "Rejected", "Capacity check becomes a distributed transaction; too costly for the team", "C43D3D"],
@@ -312,7 +312,7 @@ function card(slide, x, y, w, h, fill = LIGHT) {
 
 // ---------------------------------------------------------------- slide 7
 {
-  const s = lightSlide("Layered architecture", "Lab 3 — Selected solution");
+  const s = lightSlide("Layered architecture", "Lab 3: Selected solution");
   s.addImage({
     path: path.join(ROOT, "Lab3_Architecture/diagrams/architecture_layers.png"),
     x: 0.6, y: 1.3, w: 7.35, h: 5.55,
@@ -320,7 +320,7 @@ function card(slide, x, y, w, h, fill = LIGHT) {
   const notes = [
     ["Presentation", "Spring MVC + Thymeleaf, security at the boundary"],
     ["Business", "Five subsystems; acyclic dependencies; transaction boundary"],
-    ["Domain model", "Framework-independent — the invariants live here"],
+    ["Domain model", "Framework-independent, the invariants live here"],
     ["Data access", "Spring Data JPA; optimistic locking on Section"],
     ["External", "IdP, SIS and SMTP behind adapters, stubbed in development"],
   ];
@@ -341,7 +341,7 @@ function card(slide, x, y, w, h, fill = LIGHT) {
 
 // ---------------------------------------------------------------- slide 8
 {
-  const s = lightSlide("Use-case realisation — UC4", "Lab 4 — Sequence diagram");
+  const s = lightSlide("Use-case realisation: UC4", "Lab 4: Sequence diagram");
   s.addImage({
     path: path.join(ROOT, "Lab4_SequenceDiagrams/diagrams/sd_uc4_register_for_course.png"),
     x: 0.75, y: 1.25, w: 6.05, h: 5.6,
@@ -369,7 +369,7 @@ function card(slide, x, y, w, h, fill = LIGHT) {
     x: 7.6, y: 4.15, w: 4.8, h: 0.3,
     fontFace: BODY, fontSize: 14, bold: true, color: MINT, margin: 0,
   });
-  s.addText("The seat check and the seat decrement sit in the same transaction, with optimistic locking on Section.\n\nA student who loses the race for the last seat gets \"section full\" — never an over-filled section.", {
+  s.addText("The seat check and the seat decrement sit in the same transaction, with optimistic locking on Section.\n\nA student who loses the race for the last seat gets \"section full\" and never an over-filled section.", {
     x: 7.6, y: 4.55, w: 4.85, h: 2.1,
     fontFace: BODY, fontSize: 12.5, color: WHITE, margin: 0, lineSpacingMultiple: 1.15,
   });
@@ -378,7 +378,7 @@ function card(slide, x, y, w, h, fill = LIGHT) {
 
 // ---------------------------------------------------------------- slide 9
 {
-  const s = lightSlide("Participating classes — VOPC", "Lab 5 — Collaboration & VOPC");
+  const s = lightSlide("Participating classes: VOPC", "Lab 5: Collaboration & VOPC");
   s.addImage({
     path: path.join(ROOT, "Lab5_Collaboration_VOPC/diagrams/vopc_uc4_register_for_course.png"),
     x: 0.7, y: 1.25, w: 4.0, h: 5.6,
@@ -387,11 +387,11 @@ function card(slide, x, y, w, h, fill = LIGHT) {
     path: path.join(ROOT, "Lab5_Collaboration_VOPC/diagrams/collab_uc4_register_for_course.png"),
     x: 5.15, y: 1.6, w: 7.55, h: 3.9,
   });
-  s.addText("VOPC — structure", {
+  s.addText("VOPC structure", {
     x: 0.7, y: 6.9, w: 4.0, h: 0.3,
     fontFace: BODY, fontSize: 12, bold: true, color: MUTED, align: "center", margin: 0,
   });
-  s.addText("Collaboration — the same interaction by object links, numbered 1 … 3.5 … 7", {
+  s.addText("Collaboration: the same interaction by object links, numbered 1, 3.5, 7", {
     x: 5.15, y: 5.6, w: 7.55, h: 0.35,
     fontFace: BODY, fontSize: 12, color: MUTED, align: "center", margin: 0,
   });
@@ -405,7 +405,7 @@ function card(slide, x, y, w, h, fill = LIGHT) {
 
 // ---------------------------------------------------------------- slide 10
 {
-  const s = lightSlide("Already running", "Lab 7 — Implementation slice");
+  const s = lightSlide("Already running", "Lab 7: Implementation slice");
   s.addImage({
     path: path.join(ROOT, "Lab7_SpringBoot/eregistrar/screenshots/homepage.png"),
     x: 0.6, y: 1.35, w: 6.9, h: 5.39,
@@ -415,7 +415,7 @@ function card(slide, x, y, w, h, fill = LIGHT) {
     fontFace: BODY, fontSize: 13, bold: true, color: TEAL, margin: 0,
   });
   const done = [
-    "Published-schedule view — the read half of UC6",
+    "Published-schedule view, the read half of UC4",
     "Section capacity shown; full sections marked",
     "MVC controller, Thymeleaf views, static assets",
     "Automated tests green on every build",

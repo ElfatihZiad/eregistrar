@@ -10,7 +10,7 @@ skinparam rectangle {
   BackgroundColor<<data>> #F3E5F5
   BackgroundColor<<external>> #ECEFF1
 }
-title eRegistrar — High-Level System Architecture (Layered)
+title eRegistrar: High-Level System Architecture (Layered)
 
 rectangle "Client Tier" <<client>> as L0 {
   component "Web Browser\n(desktop / mobile)" as Browser
@@ -23,7 +23,7 @@ rectangle "Presentation Layer" <<presentation>> as L1 {
   component "Spring Security\n(SSO, role-based access)" as Security
 }
 
-rectangle "Business Layer — Subsystems" <<business>> as L2 {
+rectangle "Business Layer: Subsystems" <<business>> as L2 {
   component "Faculty Profile" as SubFaculty
   component "Course & Program\nCatalog" as SubCatalog
   component "Scheduling" as SubSchedule

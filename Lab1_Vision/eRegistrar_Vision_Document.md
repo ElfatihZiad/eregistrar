@@ -1,7 +1,7 @@
-# Vision Document — **eRegistrar**
+# Vision Document: eRegistrar
 
-**Course:** CS425 — Software Engineering  
-**Student:** Ziad El Fatih — 618971  
+**Course:** CS425, Software Engineering  
+**Student:** Ziad El Fatih, 618971  
 
 ---
 
@@ -9,17 +9,17 @@
 
 Course registration in the Computer Science department is still run on
 spreadsheets and email. The registrar builds each term's schedule by hand,
-faculty send their teaching preferences by email, and students register on
+faculty send in their teaching preferences by email, and students register on
 paper forms that staff later key into the system.
 
-This worked when the department was small. It now runs **four entries a year**
-with 100–130 students per entry, and offers 8–9 electives in a busy block.
-Faculty each have one or two specializations, a set of courses they can teach,
-and preferences about which blocks they are available in. Some 500-level
-courses have 400-level prerequisites, so the 400-level offerings must come in a
-student's earlier blocks. Holding all of this in a spreadsheet is slow, and
-prerequisite or capacity problems are usually discovered by students after
-registration has already opened.
+That worked fine when the department was small. It now runs **four entries a
+year** with 100 to 130 students per entry, and offers 8 or 9 electives in a
+busy block. Faculty each have one or two specializations, a set of courses
+they can teach, and preferences about which blocks they're available in. Some
+500-level courses have 400-level prerequisites, so the 400-level offerings
+need to land in a student's earlier blocks. Keeping all of this straight in a
+spreadsheet is slow, and prerequisite or capacity problems usually turn up
+only after students discover them, once registration is already open.
 
 **eRegistrar** is a web application that builds the term schedule with faculty
 assigned to each section, and lets students register online with the
@@ -52,48 +52,49 @@ prerequisite and capacity rules enforced automatically.
 | Stakeholder | Role in the system |
 |---|---|
 | **Registrar (Administrator)** | Maintains courses and programs, generates and publishes the schedule, assigns faculty. |
-| **Faculty** | Maintains their own profile — specializations, teachable courses, block availability — and views their assigned sections. |
+| **Faculty** | Maintains their own profile: specializations, teachable courses, block availability. Views their assigned sections. |
 | **Student** | Views the published schedule, registers for and drops courses. |
-| **Department Chair** | Approves the published schedule; project sponsor. |
+| **Department Chair** | Approves the published schedule. Project sponsor. |
 | **IT Administrator** | Deploys and operates the system, manages accounts. |
 
-**User environment.** Two to three registrar staff, about 25 faculty and up to
-500 students on campus. All access is through a browser on desktop or phone; no
-software is installed on user machines. Registration load is concentrated in the
-first hour after the registration window opens.
+**User environment.** Two to three registrar staff, about 25 faculty, and up
+to 500 students on campus. All access is through a browser on desktop or
+phone, with no software installed on user machines. Registration load is
+heaviest in the first hour after the registration window opens.
 
 ## 4. Product Overview
 
-### 4.1 Needs and Features — Problem / Need / Feature Table
+### 4.1 Needs and Features: Problem / Need / Feature Table
 
 | # | Problem | Need | Priority | Feature |
 |---|---|---|---|---|
-| 1 | Faculty preferences arrive by email and are applied inconsistently | Faculty must own their qualifications and availability | High | **F1 — Faculty Profile Management** |
-| 2 | Course and prerequisite data live in several spreadsheets that disagree | One authoritative catalog | High | **F2 — Course & Program Catalog** |
-| 3 | Building a term schedule takes weeks of manual work | Generate the schedule automatically from the rules | High | **F3 — Schedule Generation** |
-| 4 | Manual assignment double-books faculty or assigns courses they cannot teach | Detect assignment conflicts | High | **F4 — Faculty Assignment & Conflict Detection** |
-| 5 | Students register on paper forms that staff re-key | Students register themselves with an immediate answer | High | **F5 — Online Student Registration** |
-| 6 | Prerequisite and capacity violations are found after registration closes | Invalid registrations rejected as they are attempted | High | **F6 — Registration Rule Enforcement** |
-| 7 | Nobody can see live enrolment | Role-specific views of the schedule and enrolment | Medium | **F7 — Schedule & Enrolment Views** |
-| 8 | Anyone with the spreadsheet can change anything | Access must match the user's role | High | **F8 — Authentication & Role-Based Access** |
+| 1 | Faculty preferences arrive by email and are applied inconsistently | Faculty must own their qualifications and availability | High | **F1: Faculty Profile Management** |
+| 2 | Course and prerequisite data live in several spreadsheets that disagree | One authoritative catalog | High | **F2: Course & Program Catalog** |
+| 3 | Building a term schedule takes weeks of manual work | Generate the schedule automatically from the rules | High | **F3: Schedule Generation** |
+| 4 | Manual assignment double-books faculty or assigns courses they can't teach | Detect assignment conflicts | High | **F4: Faculty Assignment & Conflict Detection** |
+| 5 | Students register on paper forms that staff re-key | Students register themselves with an immediate answer | High | **F5: Online Student Registration** |
+| 6 | Prerequisite and capacity violations are found after registration closes | Invalid registrations rejected as they are attempted | High | **F6: Registration Rule Enforcement** |
+| 7 | Nobody can see live enrolment | Role-specific views of the schedule and enrolment | Medium | **F7: Schedule & Enrolment Views** |
+| 8 | Anyone with the spreadsheet can change anything | Access must match the user's role | High | **F8: Authentication & Role-Based Access** |
 
 ### 4.2 Assumptions and Dependencies
 
 1. The academic calendar of blocks and entries is fixed by the university.
 2. Course and program definitions are maintained inside eRegistrar by the registrar.
 3. Every user has a university account; authentication is delegated to the campus identity provider.
-4. Deployment target is a Java/Spring Boot environment with a relational database.
+4. The deployment target is a Java/Spring Boot environment with a relational database.
 
 ### 4.3 Alternatives
 
-- **Status quo (spreadsheets + email).** Free and familiar, but no rule
-  enforcement, no concurrency control, and it does not scale to four entries a year.
-- **Commercial SIS registration modules.** Comprehensive but priced and scoped
-  for a whole institution, and they do not model this department's block/entry
-  structure without heavy customization.
-- **Build in-house — chosen.** The scheduling rules are specific to this
-  department and are the hard part of the problem; a small focused application
-  is cheaper than customizing a large product.
+- **Status quo (spreadsheets and email).** Free and familiar, but it has no
+  rule enforcement, no concurrency control, and won't scale to four entries a
+  year.
+- **Commercial SIS registration modules.** Comprehensive, but priced and
+  scoped for a whole institution, and they don't model this department's
+  block/entry structure without heavy customization.
+- **Build in-house.** This is what we chose. The scheduling rules are
+  specific to this department and are the hard part of the problem, so a
+  small focused application ends up cheaper than customizing a large product.
 
 ## 5. Other Product Requirements
 
@@ -102,6 +103,6 @@ first hour after the registration window opens.
 | Platform | Java 11+, Spring Boot, relational database, browser client |
 | Performance | Pages respond within 2 seconds; 150 concurrent users during registration |
 | Concurrency | Section capacity holds under simultaneous registration |
-| Security | Role-based authorization on every operation; TLS; no passwords stored by the application |
+| Security | Role-based authorization on every operation, TLS everywhere, no passwords stored by the application |
 | Usability | Student pages usable on a phone; staff productive after one walkthrough |
 | Compliance | Student records handled in accordance with FERPA |

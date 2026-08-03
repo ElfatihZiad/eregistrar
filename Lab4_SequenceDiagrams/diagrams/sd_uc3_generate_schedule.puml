@@ -1,6 +1,6 @@
 @startuml sd_uc3_generate_schedule
 skinparam shadowing false
-title UC3 — Generate Term Schedule (Basic Flow) — Analysis-level Sequence Diagram
+title UC3: Generate Term Schedule (Basic Flow), Analysis-level Sequence Diagram
 
 actor "Registrar" as Admin
 boundary "ScheduleGenerationPage\n<<boundary>>" as UI
@@ -79,7 +79,7 @@ loop for each required course in each block
             Generator -> Generator : try next candidate
         end
         deactivate Checker
-    else A1 — no qualified faculty available
+    else A1: no qualified faculty available
         Generator -> Generator : add course to unstaffed list
         note right of Generator
           Generation continues; the section

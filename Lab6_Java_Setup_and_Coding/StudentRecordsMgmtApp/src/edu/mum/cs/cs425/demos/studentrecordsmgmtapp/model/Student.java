@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * A university student record.
  *
- * CS425 Lab 6 — Ziad El Fatih (618971)
+ * CS425 Lab 6: Ziad El Fatih (618971)
  */
 public class Student {
 

@@ -7,7 +7,7 @@ skinparam object {
   BackgroundColor<<control>> #FFF8E1
   BackgroundColor<<entity>> #E8F5E9
 }
-title UC4 — Register for Course — Collaboration (Communication) Diagram
+title UC4: Register for Course, Collaboration (Communication) Diagram
 
 object "Student" as Student <<actor>>
 object "aRegistrationPage" as UI <<boundary>>

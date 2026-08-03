@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * CS425 Lab 7 — eRegistrar, the first implementation slice of the course
+ * CS425 Lab 7: eRegistrar, the first implementation slice of the course
  * project specified in Labs 1–5.
  *
  * Ziad El Fatih (618971)

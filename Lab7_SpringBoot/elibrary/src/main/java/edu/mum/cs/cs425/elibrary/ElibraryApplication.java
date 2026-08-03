@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * CS425 Lab 7 — eLibrary, my first Spring Boot web application.
+ * CS425 Lab 7: eLibrary, my first Spring Boot web application.
  *
  * Ziad El Fatih (618971)
  */

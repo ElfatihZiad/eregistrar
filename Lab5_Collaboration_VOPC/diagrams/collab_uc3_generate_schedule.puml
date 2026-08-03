@@ -7,7 +7,7 @@ skinparam object {
   BackgroundColor<<control>> #FFF8E1
   BackgroundColor<<entity>> #E8F5E9
 }
-title UC3 — Generate Term Schedule — Collaboration (Communication) Diagram
+title UC3: Generate Term Schedule, Collaboration (Communication) Diagram
 
 object "Registrar" as Admin <<actor>>
 object "aScheduleGenerationPage" as UI <<boundary>>

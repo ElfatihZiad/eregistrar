@@ -1,7 +1,7 @@
-# System Requirements Specification — **eRegistrar**
+# System Requirements Specification: eRegistrar
 
-**Course:** CS425 — Software Engineering  
-**Student:** Ziad El Fatih — 618971  
+**Course:** CS425, Software Engineering  
+**Student:** Ziad El Fatih, 618971  
 **Project repository:** `https://github.com/ElfatihZiad/eregistrar`  
 
 ---
@@ -10,16 +10,16 @@
 
 This document specifies the requirements for **eRegistrar**, a web-based course
 scheduling and registration system for the Computer Science department. It
-presents the use-case model — actors, use-case diagram, and descriptions of the
-major use cases — together with the non-functional requirements.
+covers the use-case model (actors, use-case diagram, and descriptions of the
+major use cases) along with the non-functional requirements.
 
 It follows from the [Vision Document](../Lab1_Vision/eRegistrar_Vision_Document.md)
-and is the input to the architecture (Lab 3) and use-case analysis (Labs 4–5).
+and feeds into the architecture (Lab 3) and use-case analysis (Labs 4 and 5).
 
-**In scope:** faculty profiles, course catalog, schedule generation, and student
-registration.
-**Out of scope:** admissions, grading, tuition, and room allocation — these stay
-with the university's existing student information system.
+**In scope:** faculty profiles, course catalog, schedule generation, and
+student registration. **Out of scope:** admissions, grading, tuition, and room
+allocation. Those stay with the university's existing student information
+system.
 
 ### Definitions
 
@@ -35,7 +35,7 @@ with the university's existing student information system.
 | Actor | Description |
 |---|---|
 | **Student** | Registers for and drops courses; views the published schedule. |
-| **Faculty** | Maintains their profile — specializations, teachable courses, block availability; views assigned sections. |
+| **Faculty** | Maintains their profile (specializations, teachable courses, block availability) and views assigned sections. |
 | **Registrar (Administrator)** | Maintains the catalog, generates and publishes the schedule, assigns faculty. |
 
 ## 3. Use-Case Model
@@ -49,22 +49,22 @@ with the university's existing student information system.
 | UC3 | Generate Term Schedule | Registrar | F3, F4 | Build a draft schedule of sections for a term and assign qualified, available faculty. **Described in full below.** |
 | UC4 | Register for Course | Student | F5, F6 | Register for a section of a published schedule, subject to the registration rules. **Described in full below.** |
 | UC5 | Drop Course | Student | F5 | Drop a registration within the registration window, releasing the seat. |
-| UC6 | View Schedule | Student, Faculty | F7 | View the published schedule — a student's own registrations, or a faculty member's assigned sections. |
+| UC6 | View Schedule | Student, Faculty | F7 | View the published schedule: a student's own registrations, or a faculty member's assigned sections. |
 
-UC3 and UC4 are the architecturally significant use cases and are the ones
-carried into the sequence, collaboration and VOPC diagrams of Labs 4 and 5.
+UC3 and UC4 are the architecturally significant use cases, and they're the
+ones carried into the sequence, collaboration and VOPC diagrams of Labs 4 and 5.
 
 ---
 
 ## 4. Use-Case Descriptions
 
-### UC3 — Generate Term Schedule
+### UC3: Generate Term Schedule
 
 | | |
 |---|---|
 | **Use Case Number** | 3 |
 | **Name** | Generate Term Schedule |
-| **Brief description** | The registrar generates a draft schedule for a term. The system creates a section for each course required by the active entries and assigns a qualified, available faculty member to each, reporting any course it could not staff. |
+| **Brief description** | The registrar generates a draft schedule for a term. The system creates a section for each course required by the active entries and assigns a qualified, available faculty member to each, reporting any course it couldn't staff. |
 | **Actors** | Registrar |
 | **Preconditions** | The registrar is logged in. The term, its blocks and entries are defined, the course catalog is populated (UC2), and at least one faculty profile exists (UC1). |
 
@@ -74,22 +74,22 @@ carried into the sequence, collaboration and VOPC diagrams of Labs 4 and 5.
 |---|---|---|
 | 1 | The registrar selects "Generate schedule" and chooses a term. | The system displays the generation form with the term's blocks and active entries. |
 | 2 | The registrar confirms and requests generation. | The system determines the courses required by each entry in each block, placing 400-level prerequisite courses in earlier blocks and 500-level courses in later blocks. |
-| 3 | — | For each required course the system creates a section and selects a faculty member who lists the course as teachable, is available in that block, and is not already assigned to another section in that block. |
-| 4 | — | The system saves the result as a **draft** schedule and displays it, together with any courses it could not staff. |
+| 3 | N/A | For each required course the system creates a section and selects a faculty member who lists the course as teachable, is available in that block, and isn't already assigned to another section in that block. |
+| 4 | N/A | The system saves the result as a **draft** schedule and displays it, along with any courses it couldn't staff. |
 
 **Alternate Flows**
 
-- **A1 — No qualified faculty available.** The section is created unassigned and the course is added to the unstaffed list; generation continues.
-- **A2 — Schedule already exists.** The registrar must choose explicitly between discarding the existing draft and cancelling. A published schedule is never overwritten.
+- **A1: No qualified faculty available.** The section is created unassigned and the course is added to the unstaffed list. Generation continues.
+- **A2: Schedule already exists.** The registrar has to choose explicitly between discarding the existing draft and cancelling. A published schedule is never overwritten.
 
 | | |
 |---|---|
-| **Postconditions** | A draft schedule exists for the term. Nothing is visible to students until it is published. |
+| **Postconditions** | A draft schedule exists for the term. Nothing is visible to students until it's published. |
 | **Business Rules** | **BR3:** A faculty member may not be assigned to two sections in the same block. **BR4:** A faculty member may only be assigned to a course listed as teachable in their profile. **BR5:** 400-level prerequisite courses are scheduled in earlier blocks than the 500-level courses that depend on them. |
 
 ---
 
-### UC4 — Register for Course
+### UC4: Register for Course
 
 | | |
 |---|---|
@@ -105,16 +105,16 @@ carried into the sequence, collaboration and VOPC diagrams of Labs 4 and 5.
 |---|---|---|
 | 1 | The student opens "Register" for the term. | The system displays the published schedule for the student's entry, with the assigned faculty and the remaining seats for each section. |
 | 2 | The student selects a section and confirms. | The system validates the registration: prerequisites completed, a seat available, no time conflict in that block, and course load within the student's limit. |
-| 3 | — | If every rule passes, the system creates the registration, reduces the available seats by one in the same transaction, and displays a confirmation with the updated schedule. |
+| 3 | N/A | If every rule passes, the system creates the registration, reduces the available seats by one in the same transaction, and displays a confirmation with the updated schedule. |
 
 **Alternate Flows**
 
-- **A1 — Prerequisite not met.** The registration is refused and the missing prerequisite is named.
-- **A2 — Section full.** The registration is refused, including when the last seat is taken by another student between display and confirmation.
-- **A3 — Time conflict.** The registration is refused and the conflicting section is identified.
-- **A4 — Course load exceeded.** The registration is refused and the limit is stated.
+- **A1: Prerequisite not met.** The registration is refused and the missing prerequisite is named.
+- **A2: Section full.** The registration is refused, including when the last seat is taken by another student between display and confirmation.
+- **A3: Time conflict.** The registration is refused and the conflicting section is identified.
+- **A4: Course load exceeded.** The registration is refused and the limit is stated.
 
-In every alternate flow the transaction is rolled back: no registration is
+In every alternate flow the transaction is rolled back. No registration is
 created and no seat is consumed.
 
 | | |
@@ -130,12 +130,12 @@ created and no seat is consumed.
 |---|---|
 | NFR1 | Schedule and registration pages respond within 2 seconds under normal load. |
 | NFR2 | 150 concurrent users are supported during a registration window. |
-| NFR3 | Section capacity is enforced correctly under concurrent registration — the last seat is granted to exactly one student. |
+| NFR3 | Section capacity is enforced correctly under concurrent registration. The last seat is granted to exactly one student. |
 | NFR4 | Every operation is authorized by role; a student may access only their own registrations. |
 | NFR5 | Student pages are usable at 375 px width; all traffic uses TLS. |
 | NFR6 | The system runs on any platform with a Java 11+ runtime and a relational database. |
 
-## 6. Traceability — Features to Use Cases
+## 6. Traceability: Features to Use Cases
 
 | Vision feature | Use cases |
 |---|---|

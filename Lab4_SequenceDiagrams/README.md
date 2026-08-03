@@ -1,10 +1,10 @@
-# Lab 4 — Sequence Diagrams
+# Lab 4: Sequence Diagrams
 
 **Project:** eRegistrar  
-**Student:** Ziad El Fatih — 618971  
+**Student:** Ziad El Fatih, 618971  
 
 Sequence diagrams for the two major use cases of the
-[SRS](../Lab2_SRS/eRegistrar_SRS.md), drawn at the analysis level: every
+[SRS](../Lab2_SRS/eRegistrar_SRS.md), drawn at the analysis level. Every
 lifeline is stereotyped as **«boundary»**, **«control»** or **«entity»**, and
 messages flow actor → boundary → control → entity, never back up.
 
@@ -16,7 +16,7 @@ messages flow actor → boundary → control → entity, never back up.
 
 ---
 
-## UC4 — Register for Course
+## UC4: Register for Course
 
 ![UC4 sequence diagram](diagrams/sd_uc4_register_for_course.png)
 
@@ -24,14 +24,14 @@ messages flow actor → boundary → control → entity, never back up.
 |---|---|---|
 | `RegistrationPage` | boundary | Shows the schedule with remaining seats; collects the student's selection. |
 | `RegistrationController` | control | Coordinates the use case; owns the transaction boundary. |
-| `RegistrationValidator` | control | Applies BR6–BR9: prerequisites, capacity, time conflict, course load. |
+| `RegistrationValidator` | control | Applies BR6 to BR9: prerequisites, capacity, time conflict, course load. |
 | `Student`, `Section`, `Course`, `Registration` | entity | The registration data. |
 
-The key detail is that the seat check and the seat decrement happen in the same
-transaction on `Section`, under optimistic locking — this is what makes NFR3
-(capacity holds under concurrent registration) achievable.
+The key detail is that the seat check and the seat decrement happen in the
+same transaction on `Section`, under optimistic locking. That's what makes
+NFR3 (capacity holds under concurrent registration) achievable.
 
-## UC3 — Generate Term Schedule
+## UC3: Generate Term Schedule
 
 ![UC3 sequence diagram](diagrams/sd_uc3_generate_schedule.png)
 
@@ -43,9 +43,9 @@ transaction on `Section`, under optimistic locking — this is what makes NFR3
 | `AssignmentConflictChecker` | control | Enforces BR3 (no double booking) and BR4 (only teachable courses). |
 | `Term`, `Program`, `Course`, `Faculty`, `Section`, `Schedule` | entity | The scheduling data. |
 
-Alternate flow A1 is visible in the diagram: when no qualified, available
-faculty member exists, the section is created unassigned and the course is added
-to the unstaffed list rather than aborting the run.
+Alternate flow A1 shows up in the diagram: when no qualified, available
+faculty member exists, the section is created unassigned and the course is
+added to the unstaffed list instead of aborting the run.
 
 ## Re-rendering
 

@@ -1,10 +1,10 @@
-# Lab 2, Part 2 — Git and GitHub Setup
+# Lab 2, Part 2: Git and GitHub Setup
 
 ## Repositories
 
 | Repo | Visibility | URL | Contents |
 |---|---|---|---|
-| `eregistrar` | Private | <https://github.com/ElfatihZiad/eregistrar> | The whole project — Labs 1–7 |
+| `eregistrar` | Private | <https://github.com/ElfatihZiad/eregistrar> | The whole project, Labs 1 through 7 |
 | `elibrary` | Public | <https://github.com/ElfatihZiad/elibrary> | Lab 7's eLibrary app only (its own repo, as the lab asks) |
 
 Both are pushed and current as of the last commit.
@@ -12,8 +12,9 @@ Both are pushed and current as of the last commit.
 ## How they're kept in sync
 
 The local repository at the CS425 project root is the single source of truth.
-`elibrary` is a **subtree** of it — `Lab7_SpringBoot/elibrary/` pushed on its
-own, not a separate checkout — so there's one history to maintain, not two.
+`elibrary` is a **subtree** of it. `Lab7_SpringBoot/elibrary/` gets pushed on
+its own rather than living as a separate checkout, so there's one history to
+maintain instead of two.
 
 ```bash
 git -C ~/Projects/CS425 log --oneline
@@ -23,7 +24,7 @@ git -C ~/Projects/CS425 log --oneline
 `.gitignore` because of their size; see
 [../Lab1_Vision/TOOLS_SETUP.md](../Lab1_Vision/TOOLS_SETUP.md) for the download
 commands. Instructor-provided reference material (`lessons/`, the sample
-documents) is also excluded — it's not your work, so it isn't pushed, but it
+documents) is also excluded. It's not your work, so it isn't pushed, but it
 stays on disk for you to consult.
 
 ## Working practice for the rest of the course
