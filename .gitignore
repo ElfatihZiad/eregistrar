@@ -46,3 +46,6 @@ presentation/build_deck.js
 
 # PlantUML diagram sources kept locally only; rendered PNGs are the deliverable
 *.puml
+
+# Presentation deck: uploaded separately to Sakai later, not part of the repo
+presentation/

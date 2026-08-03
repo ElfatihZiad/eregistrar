@@ -20,7 +20,6 @@ online.
 | `Lab5_Collaboration_VOPC` | Collaboration and VOPC diagrams |
 | `Lab6_Java_Setup_and_Coding` | Java coding exercises |
 | `Lab7_SpringBoot` | eLibrary and eRegistrar Spring Boot applications |
-| `presentation` | Requirements/design presentation |
 
 Each `Lab1`–`5` folder contains the report (Markdown and PDF) and its UML
 diagrams.
