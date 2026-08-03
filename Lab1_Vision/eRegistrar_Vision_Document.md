@@ -2,7 +2,6 @@
 
 **Course:** CS425 — Software Engineering  
 **Student:** Ziad El Fatih — 618971  
-**Date:** August 3, 2026  
 
 ---
 

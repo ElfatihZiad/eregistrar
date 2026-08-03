@@ -2,7 +2,6 @@
 
 **Project:** eRegistrar  
 **Student:** Ziad El Fatih — 618971  
-**Date:** August 3, 2026  
 
 For each of the two major use cases: a **collaboration (communication)
 diagram** — the same interaction as Lab 4 but organised around the links

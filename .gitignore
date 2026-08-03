@@ -21,3 +21,17 @@ tools/plantuml.jar
 # Logs
 *.log
 tools/apache-maven-3.9.9/
+
+# Instructor-provided reference material — kept locally, not part of the deliverable
+lessons/
+Sample Vision Document.docx
+SampleSystemArchitecture.jpg
+Lab2 - Sample UseCaseDescription Document-createFaculty.pdf
+Setting-up Java Software Development Environment and Coding Practice Exercises.docx
+lab1.txt
+lab2.txt
+lab3.txt
+lab4.txt
+lab5.txt
+lab6.txt
+lab7.txt

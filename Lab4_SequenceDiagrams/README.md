@@ -2,7 +2,6 @@
 
 **Project:** eRegistrar  
 **Student:** Ziad El Fatih — 618971  
-**Date:** August 3, 2026  
 
 Sequence diagrams for the two major use cases of the
 [SRS](../Lab2_SRS/eRegistrar_SRS.md), drawn at the analysis level: every

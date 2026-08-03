@@ -2,8 +2,7 @@
 
 **Course:** CS425 — Software Engineering  
 **Student:** Ziad El Fatih — 618971  
-**Date:** August 3, 2026  
-**Project repository:** `https://github.com/<your-github-username>/eregistrar`  
+**Project repository:** `https://github.com/ElfatihZiad/eregistrar`  
 
 ---
 

@@ -2,7 +2,6 @@
 
 **Course:** CS425 — Software Engineering  
 **Student:** Ziad El Fatih — 618971  
-**Date:** August 3, 2026  
 
 First iteration of architectural analysis, based on the
 [Vision Document](../Lab1_Vision/eRegistrar_Vision_Document.md) and the
