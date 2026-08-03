@@ -1,0 +1,103 @@
+@startuml sd_uc3_generate_schedule
+skinparam shadowing false
+title UC3 — Generate Term Schedule (Basic Flow) — Analysis-level Sequence Diagram
+
+actor "Registrar" as Admin
+boundary "ScheduleGenerationPage\n<<boundary>>" as UI
+control "ScheduleController\n<<control>>" as Ctrl
+control "ScheduleGenerator\n<<control>>" as Generator
+control "AssignmentConflictChecker\n<<control>>" as Checker
+entity "Term\n<<entity>>" as Term
+entity "Program\n<<entity>>" as Program
+entity "Course\n<<entity>>" as Course
+entity "Faculty\n<<entity>>" as Faculty
+entity "Section\n<<entity>>" as Section
+entity "Schedule\n<<entity>>" as Schedule
+
+Admin -> UI : select "Generate schedule"
+activate UI
+UI -> Ctrl : getGenerationForm()
+activate Ctrl
+Ctrl -> Term : findUpcomingTerms()
+activate Term
+Term --> Ctrl : terms with blocks and entries
+deactivate Term
+Ctrl --> UI : generation form
+deactivate Ctrl
+UI --> Admin : display form (term, blocks, entries)
+deactivate UI
+
+Admin -> UI : confirm parameters, request generation
+activate UI
+UI -> Ctrl : generateSchedule(termId, options)
+activate Ctrl
+Ctrl -> Generator : generate(term, options)
+activate Generator
+
+Generator -> Program : getRequiredCourses(entry, block)
+activate Program
+Program --> Generator : required courses
+deactivate Program
+
+loop for each required course in each block
+    Generator -> Course : getLevel() / getPrerequisites()
+    activate Course
+    Course --> Generator : level, prerequisites
+    deactivate Course
+
+    note right of Generator
+      BR7: 400-level prerequisite courses are
+      placed in earlier blocks, the dependent
+      500-level courses in later blocks.
+    end note
+
+    Generator -> Section : create(course, block, capacity)
+    activate Section
+    Section --> Generator : section
+    deactivate Section
+
+    Generator -> Faculty : findQualifiedAndAvailable(course, block)
+    activate Faculty
+    Faculty --> Generator : candidate faculty
+    deactivate Faculty
+
+    alt candidates exist
+        Generator -> Checker : checkAssignment(faculty, section)
+        activate Checker
+        Checker -> Faculty : getAssignments(block)
+        activate Faculty
+        Faculty --> Checker : assignments
+        deactivate Faculty
+        alt no conflict (BR5, BR6)
+            Checker --> Generator : ok
+            Generator -> Section : assignFaculty(faculty)
+            activate Section
+            Section --> Generator : assigned
+            deactivate Section
+        else conflict
+            Checker --> Generator : Conflict(reason)
+            Generator -> Generator : try next candidate
+        end
+        deactivate Checker
+    else A1 — no qualified faculty available
+        Generator -> Generator : add course to unstaffed list
+        note right of Generator
+          Generation continues; the section
+          is created unassigned rather than
+          aborting the whole run.
+        end note
+    end
+end
+
+Generator -> Schedule : create(term, sections, status = DRAFT)
+activate Schedule
+Schedule --> Generator : draft schedule
+deactivate Schedule
+Generator --> Ctrl : draft schedule + unstaffed list
+deactivate Generator
+Ctrl --> UI : draft schedule view model
+deactivate Ctrl
+UI --> Admin : display draft schedule and unstaffed courses
+deactivate UI
+
+@enduml

@@ -1,0 +1,9 @@
+Assignment Instructions
+For this Lab3 assignment, you will perform a first iteration of Architectural Analysis and produce an initial System (Solution) Architecture, for your course project. Having created the Vision document and with a good understanding of the problem you wish to implement a solution for; and having also done the Requirements analysis and identified the various Use-cases, you are now ready to perform architectural analysis and then select a suitable system architecture; taking into consideration all the existing constraints and the various guidelines/factors which you learned about in class in lesson 6.
+
+From this activity, you will produce an initial draft of a High-level System Architecture diagram, which will form part of your course project's technical documentation, along with the SRS and Vision documents.
+
+Attached, is a sample architecture diagram, which you may use as a guide. 
+
+Additional resources for assignment
+File attachment SampleSystemArchitecture.jpg ( 122 KB; Jun 10, 2026, 2:57 pm )

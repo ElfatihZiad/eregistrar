@@ -1,0 +1,39 @@
+@startuml collab_uc1_manage_faculty_profile
+!pragma layout smetana
+skinparam shadowing false
+skinparam object {
+  BackgroundColor<<actor>> #FFFFFF
+  BackgroundColor<<boundary>> #E3F2FD
+  BackgroundColor<<control>> #FFF8E1
+  BackgroundColor<<entity>> #E8F5E9
+}
+title UC1 — Manage Faculty Profile — Collaboration (Communication) Diagram
+
+object "Faculty" as Faculty <<actor>>
+object "aFacultyProfilePage" as UI <<boundary>>
+object "aFacultyProfileController" as Ctrl <<control>>
+object "aProfileValidator" as Validator <<control>>
+object "aFacultyProfile" as Profile <<entity>>
+object "aCourse" as Course <<entity>>
+object "aSpecialization" as Spec <<entity>>
+object "aBlock" as Block <<entity>>
+
+Faculty --> UI : 1: submitProfile(profileData)
+UI --> Ctrl : 2: createProfile(profileData)
+Ctrl --> Course : 2.1: findAll()
+Ctrl --> Spec : 2.2: findAll()
+Ctrl --> Block : 2.3: findAll()
+Ctrl --> Validator : 3: validate(profileData)
+Validator --> Profile : 3.1: findByEmail(email)
+Ctrl --> Profile : 4: create(profileData)
+Ctrl --> UI : 5: confirmation
+UI --> Faculty : 6: displayConfirmation()
+
+note bottom of Validator
+  3.1 enforces BR1 (unique by email).
+  BR3 (at least one specialization and
+  one teachable course) is checked on
+  the submitted data itself.
+end note
+
+@enduml

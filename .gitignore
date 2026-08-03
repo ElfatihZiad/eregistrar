@@ -1,0 +1,22 @@
+# Build output
+target/
+build/
+out/
+*.class
+
+# PlantUML jar (22 MB — download it instead, see Lab1_Vision/TOOLS_SETUP.md)
+tools/plantuml.jar
+
+# IDE
+.idea/
+.vscode/
+*.iml
+.settings/
+.project
+.classpath
+
+# OS
+.DS_Store
+
+# Logs
+*.log

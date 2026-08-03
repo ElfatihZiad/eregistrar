@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>eLibrary — Home</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header class="banner">
+    <h1 th:text="${banner}">elibrary - a digital library for everyone</h1>
+    <p class="tagline">CS425 Lab 7 — My First Spring Boot Web Application</p>
+</header>
+
+<nav>
+    <a th:href="@{/}">Home</a>
+    <a th:href="@{/about}">About</a>
+</nav>
+
+<main>
+    <section class="intro">
+        <h2>Welcome</h2>
+        <p>
+            eLibrary is a small Spring Boot and Spring MVC web application built for
+            CS425. It serves this homepage from a Thymeleaf template, with the page
+            content supplied by a Spring MVC controller.
+        </p>
+        <p class="meta">Today is <span th:text="${today}">today</span>.</p>
+    </section>
+
+    <section>
+        <h2>Featured books</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Year</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="book : ${featuredBooks}">
+                <td th:text="${book.title}">Title</td>
+                <td th:text="${book.author}">Author</td>
+                <td th:text="${book.year}">Year</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+<footer>
+    <p>Ziad El Fatih — 618971 · CS425 Software Engineering</p>
+</footer>
+
+</body>
+</html>

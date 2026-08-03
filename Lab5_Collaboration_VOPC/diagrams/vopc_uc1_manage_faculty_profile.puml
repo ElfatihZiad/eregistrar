@@ -1,0 +1,76 @@
+@startuml vopc_uc1_manage_faculty_profile
+!pragma layout smetana
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+title UC1 — Manage Faculty Profile — VOPC (View of Participating Classes)
+
+class FacultyProfilePage <<boundary>> {
+  +displayProfileForm(options)
+  +submitProfile(profileData)
+  +displayProfile(profile)
+  +displayErrors(errors)
+}
+
+class FacultyProfileController <<control>> {
+  +getProfileForm() : ProfileForm
+  +createProfile(profileData) : FacultyProfile
+  +getProfile(facultyId) : FacultyProfile
+  +updateProfile(facultyId, changes) : FacultyProfile
+  +deleteProfile(facultyId) : void
+}
+
+class ProfileValidator <<control>> {
+  +validate(profileData) : ValidationResult
+  +checkOwnership(currentUser, facultyId) : boolean
+  -isEmailUnique(email) : boolean
+  -hasMinimumQualifications(profileData) : boolean
+}
+
+class FacultyProfile <<entity>> {
+  -facultyId : Long
+  -firstName : String
+  -lastName : String
+  -email : String
+  -active : boolean
+  +getTeachableCourses() : List<Course>
+  +getSpecializations() : List<Specialization>
+  +isAvailable(block) : boolean
+}
+
+class Specialization <<entity>> {
+  -specializationId : Long
+  -name : String
+}
+
+class Course <<entity>> {
+  -code : String
+  -title : String
+  -level : int
+}
+
+class Block <<entity>> {
+  -blockId : Long
+  -sequence : int
+}
+
+class Availability <<entity>> {
+  -availabilityId : Long
+  -preferred : boolean
+}
+
+class Section <<entity>> {
+  -sectionId : Long
+}
+
+FacultyProfilePage --> FacultyProfileController : invokes
+FacultyProfileController --> ProfileValidator : uses
+FacultyProfileController --> FacultyProfile : creates / updates
+ProfileValidator ..> FacultyProfile : queries
+
+FacultyProfile "0..*" -- "1..*" Specialization : specialises in >
+FacultyProfile "0..*" -- "1..*" Course : can teach >
+FacultyProfile "1" -- "0..*" Availability : declares >
+Availability "0..*" -- "1" Block : for >
+FacultyProfile "0..1" -- "0..*" Section : is assigned to >
+
+@enduml

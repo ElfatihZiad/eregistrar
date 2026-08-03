@@ -1,0 +1,37 @@
+$ javac -d out $(find src -name '*.java')
+$ java -cp out edu.mum.cs.cs425.demos.studentrecordsmgmtapp.MyStudentRecordsMgmtApp
+
+=== Task 1: all students, ascending by name ===
+StudentId  Name       DateOfAdmission
+-----------------------------------------
+110002     Anna       12/07/1990
+110005     Bob        03/05/1990
+110004     Carlos     08/22/2009
+110001     Dave       11/18/1951
+110003     Erica      01/31/1974
+
+=== Task 2: platinum alumni (admitted 30+ years ago), descending by admission date ===
+StudentId  Name       DateOfAdmission
+-----------------------------------------
+110002     Anna       12/07/1990
+110005     Bob        03/05/1990
+110003     Erica      01/31/1974
+110001     Dave       11/18/1951
+4 platinum alumni of 5 students.
+
+=== Task 3: printHelloWorld ===
+Input: [5, 7, 35, 10, 14, 3, 70, 21, 25, 1]
+5 -> Hello
+7 -> World
+35 -> HelloWorld
+10 -> Hello
+14 -> World
+70 -> HelloWorld
+21 -> World
+25 -> Hello
+
+=== Task 4: findSecondBiggest ===
+findSecondBiggest([1, 2, 3, 4, 5]) = 4
+findSecondBiggest([19, 9, 11, 0, 12]) = 12
+findSecondBiggest([5, 5, 4]) = 4
+findSecondBiggest([-3, -1, -7]) = -3

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>eRegistrar — Home</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header class="banner">
+    <h1 th:text="${banner}">eRegistrar - course scheduling and registration</h1>
+    <p class="tagline">CS425 Lab 7 — Spring Boot / Spring WebMVC</p>
+</header>
+
+<nav>
+    <a th:href="@{/}">Home</a>
+    <a th:href="@{/about}">About</a>
+</nav>
+
+<main>
+    <section class="intro">
+        <h2>Published schedule</h2>
+        <p>
+            eRegistrar builds the term schedule with faculty assigned to each section
+            and lets students register online, with prerequisite, capacity and
+            time-conflict rules enforced as the registration is submitted.
+        </p>
+        <p class="meta">
+            Term: <strong th:text="${term}">Fall 2026</strong> ·
+            <span th:text="${today}">today</span>
+        </p>
+    </section>
+
+    <section>
+        <h2>Sections offered</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Course</th>
+                <th>Title</th>
+                <th>Block</th>
+                <th>Faculty</th>
+                <th>Seats</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="section : ${sections}">
+                <td th:text="${section.courseCode}">CS425</td>
+                <td th:text="${section.courseTitle}">Course title</td>
+                <td th:text="${section.block}">1</td>
+                <td th:text="${section.faculty}">Faculty</td>
+                <td>
+                    <span th:if="${section.full}" class="pill pill-full">Full</span>
+                    <span th:unless="${section.full}" class="pill pill-open"
+                          th:text="${section.remainingSeats} + ' of ' + ${section.capacity} + ' left'">
+                        seats left
+                    </span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="meta">
+            Sample data — the registration and persistence subsystems arrive in the
+            next iteration.
+        </p>
+    </section>
+</main>
+
+<footer>
+    <p>Ziad El Fatih — 618971 · CS425 Software Engineering</p>
+</footer>
+
+</body>
+</html>

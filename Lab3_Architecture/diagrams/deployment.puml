@@ -1,0 +1,48 @@
+@startuml deployment
+!pragma layout smetana
+skinparam shadowing false
+title eRegistrar — Deployment View
+
+node "Client Device" {
+  component "Browser" as Browser
+}
+
+cloud "University Network (HTTPS)" as Net
+
+node "Application Server\n(Linux VM)" as AppServer {
+  component "eRegistrar\nSpring Boot executable JAR\n(embedded Tomcat)" as App
+}
+
+node "Database Server\n(Linux VM)" as DbServer {
+  database "eregistrar\n(MySQL 8)" as DB
+}
+
+node "Campus Identity Provider" as IdPNode {
+  component "OIDC / SAML endpoint" as IdP
+}
+
+node "SIS Host" as SisNode {
+  component "Student Information System\nREST API" as SIS
+}
+
+node "Mail Relay" as MailNode {
+  component "SMTP" as SMTP
+}
+
+Browser --> Net : HTTPS 443
+Net --> App
+App --> DB : JDBC 3306 (TLS)
+App --> IdP : OIDC over HTTPS
+App --> SIS : REST over HTTPS
+App --> SMTP : SMTP 587
+
+note right of AppServer
+  Single application server is sufficient
+  for the current load (150 concurrent
+  users at peak). Horizontal scaling is
+  possible because the application is
+  stateless apart from the HTTP session,
+  which can be externalised if needed.
+end note
+
+@enduml

@@ -1,0 +1,10 @@
+In this Lab5 assignment, as part of your UseCase analysis activities, create Collaboration and VOPC (a.k.a View Of Participating Classes) diagrams for your course project.
+
+Review and follow the guidelines for these, in the 2nd half of the lesson 7 slides (i.e. slides 41 - 57 in the recorded videos).
+
+ 
+
+You may refer the following videos.
+
+CS425DE-202002-05-02 (L7)-20210520_061953.mp4
+CS425DE-202002-05-03 (L7)-20210520_061956.mp4

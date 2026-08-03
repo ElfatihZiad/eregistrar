@@ -1,0 +1,118 @@
+:root {
+    --ink: #1f2933;
+    --muted: #5b6b7c;
+    --accent: #1d4e89;
+    --accent-soft: #e8f0fa;
+    --line: #d7e0ea;
+    --bg: #f7f9fc;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.55;
+}
+
+.banner {
+    background: linear-gradient(135deg, var(--accent), #2e7bc4);
+    color: #fff;
+    padding: 2.5rem 1.5rem 2rem;
+    text-align: center;
+}
+
+.banner h1 {
+    margin: 0;
+    font-size: clamp(1.4rem, 4vw, 2.2rem);
+    letter-spacing: -0.01em;
+}
+
+.tagline {
+    margin: 0.5rem 0 0;
+    opacity: 0.85;
+    font-size: 0.95rem;
+}
+
+nav {
+    display: flex;
+    gap: 1.25rem;
+    justify-content: center;
+    padding: 0.85rem 1rem;
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+}
+
+nav a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+nav a:hover { text-decoration: underline; }
+
+main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 3rem;
+}
+
+section { margin-bottom: 2.5rem; }
+
+h2 {
+    font-size: 1.25rem;
+    margin: 0 0 0.75rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--accent-soft);
+}
+
+.meta { color: var(--muted); font-size: 0.9rem; }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+th, td {
+    text-align: left;
+    padding: 0.7rem 0.9rem;
+    border-bottom: 1px solid var(--line);
+}
+
+th {
+    background: var(--accent-soft);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--accent);
+}
+
+tbody tr:last-child td { border-bottom: none; }
+
+code {
+    background: #eef2f7;
+    padding: 0.1rem 0.35rem;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+
+footer {
+    border-top: 1px solid var(--line);
+    background: #fff;
+    text-align: center;
+    padding: 1.25rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
+@media (max-width: 480px) {
+    main { padding: 1.5rem 1rem 2rem; }
+    th, td { padding: 0.55rem 0.6rem; font-size: 0.9rem; }
+}

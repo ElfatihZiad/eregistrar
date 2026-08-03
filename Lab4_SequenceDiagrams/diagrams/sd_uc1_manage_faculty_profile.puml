@@ -1,0 +1,108 @@
+@startuml sd_uc1_manage_faculty_profile
+skinparam shadowing false
+title UC1 — Manage Faculty Profile (Create and Update) — Analysis-level Sequence Diagram
+
+actor "Faculty" as Faculty
+boundary "FacultyProfilePage\n<<boundary>>" as UI
+control "FacultyProfileController\n<<control>>" as Ctrl
+control "ProfileValidator\n<<control>>" as Validator
+entity "FacultyProfile\n<<entity>>" as Profile
+entity "Course\n<<entity>>" as Course
+entity "Specialization\n<<entity>>" as Spec
+entity "Block\n<<entity>>" as Block
+
+== 1.1.0 Create Faculty Profile ==
+
+Faculty -> UI : select "Create my profile"
+activate UI
+UI -> Ctrl : getProfileForm()
+activate Ctrl
+Ctrl -> Course : findAll()
+activate Course
+Course --> Ctrl : teachable course options
+deactivate Course
+Ctrl -> Spec : findAll()
+activate Spec
+Spec --> Ctrl : specialization options
+deactivate Spec
+Ctrl -> Block : findAll()
+activate Block
+Block --> Ctrl : block options
+deactivate Block
+Ctrl --> UI : empty profile form + option lists
+deactivate Ctrl
+UI --> Faculty : display form
+deactivate UI
+
+Faculty -> UI : complete form, submit
+activate UI
+UI -> Ctrl : createProfile(profileData)
+activate Ctrl
+Ctrl -> Validator : validate(profileData)
+activate Validator
+Validator -> Profile : findByEmail(email)
+activate Profile
+Profile --> Validator : none
+deactivate Profile
+note right of Validator
+  BR1: unique by email address
+  BR3: at least one specialization
+       and one teachable course
+end note
+alt valid
+    Validator --> Ctrl : valid
+    Ctrl -> Profile : create(profileData)
+    activate Profile
+    Profile --> Ctrl : saved profile
+    deactivate Profile
+    Ctrl --> UI : confirmation
+    UI --> Faculty : "Profile created"
+else A1 — duplicate email / A2 — validation failure
+    Validator --> Ctrl : ValidationErrors
+    Ctrl --> UI : form with field errors
+    UI --> Faculty : redisplay form, nothing saved
+end
+deactivate Validator
+deactivate Ctrl
+deactivate UI
+
+== 1.1.2 Update Faculty Profile ==
+
+Faculty -> UI : select "Edit profile"
+activate UI
+UI -> Ctrl : getProfile(facultyId)
+activate Ctrl
+Ctrl -> Validator : checkOwnership(currentUser, facultyId)
+activate Validator
+alt A3 — not the owner and not an administrator
+    Validator --> Ctrl : AccessDenied
+    Ctrl --> UI : error, attempt logged
+    UI --> Faculty : "Not authorised"
+else owner or administrator (BR2)
+    Validator --> Ctrl : ok
+    deactivate Validator
+    Ctrl -> Profile : findById(facultyId)
+    activate Profile
+    Profile --> Ctrl : profile
+    deactivate Profile
+    Ctrl --> UI : pre-filled form
+    UI --> Faculty : display form
+
+    Faculty -> UI : change values, submit
+    UI -> Ctrl : updateProfile(facultyId, changes)
+    Ctrl -> Profile : update(changes)
+    activate Profile
+    Profile --> Ctrl : updated
+    deactivate Profile
+    note right of Ctrl
+      If the change removes availability or a
+      teachable course that a published section
+      depends on, the registrar is notified.
+    end note
+    Ctrl --> UI : confirmation
+    UI --> Faculty : "Profile updated"
+end
+deactivate Ctrl
+deactivate UI
+
+@enduml

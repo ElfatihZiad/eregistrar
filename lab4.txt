@@ -1,0 +1,7 @@
+For this Lab4 assignment, having done an initial requirements/usecase analysis and identified the main use-cases for your project, you will now perform further analysis for each of your Use-cases, and create/produce Sequence diagrams for 2 or 3 of the major, significant use-cases. You may use, the example on slide 30 of the lesson7 lecture slides(Please refer video lecture), as a guide.
+
+Make sure to use a suitable UML diagramming tool for creating your Sequence diagrams (e.g. www.draw.io, StarUML or Enterprise Architect etc). Also, make sure to identify and indicate the Analysis classes (i.e. Entity, Control and/or Boundary class) involved in each use-case, on each of your sequence diagrams.
+
+Submit your sequence diagrams.
+
+Enjoy!

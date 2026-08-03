@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>eRegistrar — About</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header class="banner">
+    <h1 th:text="${banner}">eregistrar - a digital library for everyone</h1>
+    <p class="tagline">CS425 Lab 7 — My First Spring Boot Web Application</p>
+</header>
+
+<nav>
+    <a th:href="@{/}">Home</a>
+    <a th:href="@{/about}">About</a>
+</nav>
+
+<main>
+    <section class="intro">
+        <h2>About this application</h2>
+        <p>
+            Built with Spring Boot 2.7 and Spring MVC on Java 11, with Thymeleaf for
+            server-side rendering and Spring Boot DevTools for automatic restart and
+            LiveReload during development.
+        </p>
+        <ul>
+            <li><strong>Build:</strong> Apache Maven</li>
+            <li><strong>Controller:</strong> <code>edu.mum.cs.cs425.eregistrar.controller.HomeController</code></li>
+            <li><strong>Templates:</strong> <code>src/main/resources/templates</code></li>
+            <li><strong>Static assets:</strong> <code>src/main/resources/static</code></li>
+        </ul>
+    </section>
+</main>
+
+<footer>
+    <p>Ziad El Fatih — 618971 · CS425 Software Engineering</p>
+</footer>
+
+</body>
+</html>

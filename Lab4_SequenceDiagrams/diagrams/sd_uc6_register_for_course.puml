@@ -1,0 +1,100 @@
+@startuml sd_uc6_register_for_course
+skinparam shadowing false
+skinparam sequenceMessageAlign left
+title UC6 — Register for Course (Basic Flow) — Analysis-level Sequence Diagram
+
+actor "Student" as Student
+boundary "RegistrationPage\n<<boundary>>" as UI
+control "RegistrationController\n<<control>>" as Ctrl
+control "RegistrationValidator\n<<control>>" as Validator
+entity "Student\n<<entity>>" as StudentE
+entity "Section\n<<entity>>" as Section
+entity "Course\n<<entity>>" as Course
+entity "Registration\n<<entity>>" as Reg
+
+Student -> UI : select term, open registration
+activate UI
+UI -> Ctrl : getPublishedSchedule(student, term)
+activate Ctrl
+Ctrl -> StudentE : getEntry()
+activate StudentE
+StudentE --> Ctrl : entry
+deactivate StudentE
+Ctrl -> Section : findPublishedSections(entry, term)
+activate Section
+Section --> Ctrl : sections [with remaining seats]
+deactivate Section
+Ctrl --> UI : schedule view model
+deactivate Ctrl
+UI --> Student : display sections and remaining seats
+deactivate UI
+
+Student -> UI : select section, confirm registration
+activate UI
+UI -> Ctrl : register(studentId, sectionId)
+activate Ctrl
+
+Ctrl -> Validator : validate(student, section)
+activate Validator
+
+Validator -> Section : getCourse()
+activate Section
+Section --> Validator : course
+deactivate Section
+
+Validator -> Course : getPrerequisites()
+activate Course
+Course --> Validator : prerequisites
+deactivate Course
+
+Validator -> StudentE : hasCompleted(prerequisites)
+activate StudentE
+StudentE --> Validator : true
+deactivate StudentE
+
+Validator -> Section : hasAvailableSeat()
+activate Section
+Section --> Validator : true
+deactivate Section
+
+Validator -> StudentE : getRegistrations(block)
+activate StudentE
+StudentE --> Validator : existing registrations
+deactivate StudentE
+
+note right of Validator
+  Checks, in order (BR11–BR15):
+  1. prerequisites completed
+  2. seat available
+  3. no time conflict in the block
+  4. course load within the
+     student category limit
+  5. not already registered
+end note
+
+Validator --> Ctrl : valid
+deactivate Validator
+
+Ctrl -> Reg : create(student, section)
+activate Reg
+Reg --> Ctrl : registration
+deactivate Reg
+
+Ctrl -> Section : decrementAvailableSeats()
+activate Section
+note right of Section
+  Same transaction as the
+  registration insert, with
+  optimistic locking on the
+  section — capacity can never
+  be exceeded (NFR3, BR12).
+end note
+Section --> Ctrl : ok
+deactivate Section
+
+Ctrl --> UI : confirmation + updated schedule
+deactivate Ctrl
+UI --> Student : display confirmation
+deactivate UI
+
+@enduml

@@ -1,0 +1,26 @@
+=== Tool verification run on Mon Aug  3 13:04:15 EDT 2026 ===
+
+$ sw_vers
+ProductName:		macOS
+ProductVersion:		26.5.2
+BuildVersion:		25F84
+
+$ java -version
+openjdk version "11.0.30" 2026-01-20
+OpenJDK Runtime Environment Homebrew (build 11.0.30+0)
+OpenJDK 64-Bit Server VM Homebrew (build 11.0.30+0, mixed mode)
+
+$ javac -version
+javac 11.0.30
+
+$ git --version
+git version 2.39.5 (Apple Git-154)
+
+$ node --version
+v24.10.0
+
+$ npm --version
+11.6.0
+
+$ python3 --version
+Python 3.9.6

@@ -1,0 +1,21 @@
+In this assignment, do the following:
+
+1. Verify the setup of your development system/PC or Mac, ensuring your have the following prerequisites:
+    
+    1.1 JavaSE JDK (Feel free to use the latest one)
+
+    1.2 Apache Maven (3.x.x) - follow the supplementary guide provided on How to Setup and Use Apache Maven for your project.
+
+    1.3 An IDE for Enterprise Java application development (Eclipse for JavaEE, Spring Tools Suite 4, Netbeans, IntelliJIDEA, Visual Studio Code or some other IDE of your choice)
+
+2. Create a Spring Boot web application, by following the step-by-step tutorial provided for you here - eLibrary - My First Spring Boot Web Application 
+
+3. Change the Homepage banner text from "elibrary - ..." to "[Your name]'s elibrary - ...". Then, take a screenshot of the homepage and save it to a folder named, screenshots, which you create inside your project's parent folder.
+
+4. Make a new repo named, elibrary, in your Github account and commit/push your finished/working source code to it. Also, submit a finished zip file of the project, here to Sakai, including the url of your repo on github (Simply enter the url of your repo on github, as text, into this Lab7 sakai assignment, when you submit). 
+
+5. Using Spring Boot DevTools and LiveReload to enhance your dev workflow: Go over the tutorial provided to learn how to Enhance Your Workflow for Spring Boot App development with DevTools and LiveReload    
+
+6. Create another new Spring Boot / Spring WebMVC project, named eRegistrar; similar to the eLibrary; with just a homepage. Use the above step-by-step tutorial for eLibrary, as guide. But do this new project from scratch. And include your own content.
+
+//-- Enjoy --//
