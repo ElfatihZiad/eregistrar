@@ -125,6 +125,8 @@ are in the SRS document linked above.
 
 Full document: [Lab3_Architecture/eRegistrar_Architecture.pdf](Lab3_Architecture/eRegistrar_Architecture.pdf)
 
+### As designed
+
 ![Layered architecture](Lab3_Architecture/diagrams/architecture_layers.png)
 
 A layered web architecture: Presentation, then Business (subsystems), then
@@ -134,6 +136,18 @@ microservices because it keeps a registration inside one local transaction,
 which is what makes the capacity rule (BR7) enforceable without a
 distributed transaction; see the architecture document for the full
 comparison of alternatives considered.
+
+### As built
+
+The diagram above is the full designed architecture, including parts that
+are out of scope for this submission (the REST API, the notification
+service, and the SIS and identity-provider integrations). This is what
+actually exists in the code:
+
+![As-built architecture](Lab7_SpringBoot/eregistrar/docs/architecture_asbuilt.png)
+
+The layering and the downward-only dependency rule are the same; the
+implemented slice is narrower.
 
 ## 5. UML Diagrams
 
@@ -215,12 +229,33 @@ one `@Transactional` method.
 **Repository layer.** Plain Spring Data JPA repositories; no custom SQL
 except one `@Query` for ordering the published schedule.
 
-**Entity and database design.** `Section` carries a `@Version` column, so
-the seat check and seat increment inside one transaction are protected by
-optimistic locking: if two requests raced for the last seat, the losing
-commit would fail with `OptimisticLockingFailureException` rather than
-silently over-filling the section. `RegistrationController` catches that
-exception and reports it to the student as a normal "section full" error.
+**Entity and database design.**
+
+![Data model](Lab7_SpringBoot/eregistrar/docs/data_model.png)
+
+Six entities, each a `@Entity` class from which Hibernate generates the
+matching table. Three modelling decisions worth calling out:
+
+- **`Registration` is an event record, not a join table.** A plain
+  many-to-many between `Student` and `Section` would only record *that* a
+  link exists. Giving `Registration` its own identity, plus `registeredOn`
+  and `status`, means the table records *when* each registration happened
+  and what became of it.
+- **Drops are soft.** `RegistrationService.drop()` sets `status` to
+  `DROPPED` and releases the seat; it never deletes the row. The
+  registration history survives, which is what makes the data useful for
+  anything after the fact (enrolment trends, drop rates, audit).
+- **`registeredCount` is deliberately denormalized.** Remaining seats could
+  be derived with a `COUNT(*)` over `Registration` on every page load.
+  Storing the count on `Section` instead makes the schedule page a single
+  cheap read, and the cost of that choice is that the count must be kept
+  correct on write. That is exactly what the transaction plus the
+  `@Version` column buy: the seat check and the seat increment happen
+  inside one transaction under optimistic locking, so if two requests race
+  for the last seat, the losing commit fails with
+  `OptimisticLockingFailureException` rather than silently over-filling the
+  section. `RegistrationController` catches that and reports it to the
+  student as an ordinary "section full" message.
 
 ### Security (authentication and authorization)
 
