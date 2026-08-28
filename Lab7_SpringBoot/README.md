@@ -37,12 +37,12 @@ Open <http://localhost:8080>.
 
 Directory: [eregistrar/](eregistrar/) · package `edu.mum.cs.cs425.eregistrar`
 
-Built from scratch with its own content: the homepage shows a published term
-schedule (course, block, faculty, remaining seats), the read-only half of
-use case UC4 (Register for Course) from the SRS. Full sections are marked as
-such.
-
-![eRegistrar homepage](eregistrar/screenshots/homepage.png)
+The course project itself: a layered Spring Boot application (controller,
+service, repository, JPA entities, H2 database) implementing UC4 (Register
+for Course) end to end, not just a static view. See the
+[root README](../README.md) for the full write-up: architecture, layer
+structure, install/run/database instructions, tests and evidence,
+screenshots, and known limitations.
 
 ```bash
 cd Lab7_SpringBoot/eregistrar && ./mvnw spring-boot:run
