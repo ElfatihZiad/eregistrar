@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>eRegistrar: Sign in</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header class="banner">
+    <h1>Ziad El Fatih's eRegistrar - course scheduling and registration</h1>
+    <p class="tagline">CS425 Software Engineering course project</p>
+</header>
+
+<main>
+    <section class="intro" style="max-width: 420px; margin: 0 auto;">
+        <h2>Student sign in</h2>
+
+        <div th:if="${param.error}" class="flash flash-error">
+            Unknown student ID or wrong password.
+        </div>
+        <div th:if="${param.loggedOut}" class="flash flash-success">
+            You've been signed out.
+        </div>
+
+        <form th:action="@{/login}" method="post" style="display:flex; flex-direction:column; gap:0.9rem; margin-top:1.25rem;">
+            <label>
+                Student ID
+                <input type="text" name="username" placeholder="S1001" required
+                       style="width:100%; padding:0.5rem 0.7rem; border:1px solid var(--line); border-radius:4px; margin-top:0.3rem;">
+            </label>
+            <label>
+                Password
+                <input type="password" name="password" required
+                       style="width:100%; padding:0.5rem 0.7rem; border:1px solid var(--line); border-radius:4px; margin-top:0.3rem;">
+            </label>
+            <button type="submit"
+                    style="padding:0.6rem; border:none; border-radius:4px; background:var(--accent); color:#fff; font-weight:600; cursor:pointer;">
+                Sign in
+            </button>
+        </form>
+
+        <p class="meta" style="margin-top:1.5rem;">
+            Demo accounts: S1001 through S1005, password <code>password123</code>
+            for all of them (seeded on startup, see
+            <code>DataSeeder</code>). Not a real secret; this is sample data
+            for the class demo.
+        </p>
+    </section>
+</main>
+
+<footer>
+    <p>Ziad El Fatih, 618971 · CS425 Software Engineering</p>
+</footer>
+
+</body>
+</html>

@@ -58,8 +58,9 @@ class RegistrationServiceTest {
         Block block = blockRepository.save(new Block(1, "Block 1"));
         oneSeatSection = sectionRepository.save(new Section(course, block, faculty, 1));
 
-        alice = studentRepository.save(new Student("T-ALICE", "Alice", "alice@mum.edu"));
-        bob = studentRepository.save(new Student("T-BOB", "Bob", "bob@mum.edu"));
+        // The password hash isn't exercised by these tests; any non-null value works.
+        alice = studentRepository.save(new Student("T-ALICE", "Alice", "alice@mum.edu", "n/a"));
+        bob = studentRepository.save(new Student("T-BOB", "Bob", "bob@mum.edu", "n/a"));
     }
 
     @Test

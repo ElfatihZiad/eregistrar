@@ -11,25 +11,37 @@ import edu.mum.cs.cs425.eregistrar.repository.FacultyRepository;
 import edu.mum.cs.cs425.eregistrar.repository.SectionRepository;
 import edu.mum.cs.cs425.eregistrar.repository.StudentRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-/** Loads sample courses, faculty, sections and students into H2 on startup. */
+/**
+ * Loads sample courses, faculty, sections and students into H2 on startup.
+ *
+ * Every demo student is seeded with the same password, "password123",
+ * stored as a BCrypt hash. That plaintext value is sample data for the
+ * class demo, not a real credential.
+ */
 @Component
 public class DataSeeder implements CommandLineRunner {
+
+    private static final String DEMO_PASSWORD = "password123";
 
     private final CourseRepository courses;
     private final FacultyRepository faculty;
     private final BlockRepository blocks;
     private final SectionRepository sections;
     private final StudentRepository students;
+    private final PasswordEncoder passwordEncoder;
 
     public DataSeeder(CourseRepository courses, FacultyRepository faculty, BlockRepository blocks,
-                       SectionRepository sections, StudentRepository students) {
+                       SectionRepository sections, StudentRepository students,
+                       PasswordEncoder passwordEncoder) {
         this.courses = courses;
         this.faculty = faculty;
         this.blocks = blocks;
         this.sections = sections;
         this.students = students;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -56,11 +68,12 @@ public class DataSeeder implements CommandLineRunner {
         sections.save(section(cs544, block2, lindqvist, 28, 19));
         sections.save(section(cs582, block3, rossi, 24, 8));
 
-        students.save(new Student("S1001", "Alex Rivera", "arivera@mum.edu"));
-        students.save(new Student("S1002", "Priya Nair", "pnair@mum.edu"));
-        students.save(new Student("S1003", "Jonas Weber", "jweber@mum.edu"));
-        students.save(new Student("S1004", "Mei Lin", "mlin@mum.edu"));
-        students.save(new Student("S1005", "Tariq Hassan", "thassan@mum.edu"));
+        String hash = passwordEncoder.encode(DEMO_PASSWORD);
+        students.save(new Student("S1001", "Alex Rivera", "arivera@mum.edu", hash));
+        students.save(new Student("S1002", "Priya Nair", "pnair@mum.edu", hash));
+        students.save(new Student("S1003", "Jonas Weber", "jweber@mum.edu", hash));
+        students.save(new Student("S1004", "Mei Lin", "mlin@mum.edu", hash));
+        students.save(new Student("S1005", "Tariq Hassan", "thassan@mum.edu", hash));
     }
 
     private Section section(Course course, Block block, Faculty facultyMember,

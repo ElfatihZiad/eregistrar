@@ -59,9 +59,12 @@ registration, registration rule enforcement, schedule/enrolment views,
 role-based access. Full problem/need/feature table in the Vision Document.
 
 **Assumptions and constraints.** The academic calendar (blocks, entries) is
-fixed by the university; authentication would be delegated to the campus
-identity provider in a production deployment; the system targets a Java /
-Spring Boot stack with a relational database.
+fixed by the university; a production deployment would delegate
+authentication to the campus identity provider rather than the app's own
+login (this implementation uses its own login, as an extra-credit security
+addition, since integrating a real identity provider is out of scope for a
+course project); the system targets a Java / Spring Boot stack with a
+relational database.
 
 ## 2. Vision
 
@@ -100,9 +103,9 @@ Full document: [Lab2_SRS/eRegistrar_SRS.pdf](Lab2_SRS/eRegistrar_SRS.pdf)
 
 | | |
 |---|---|
-| Brief description | A student registers for a section of a published schedule. The system accepts the registration only if a seat is available and the student is not already registered for that section. |
-| Preconditions | The student exists and a schedule is published. |
-| Basic flow | Student selects a section and submits their student ID. The system checks the business rules, creates the registration, and decrements the available seats in the same transaction. |
+| Brief description | A signed-in student registers for a section of a published schedule. The system accepts the registration only if a seat is available and the student is not already registered for that section. |
+| Preconditions | The student is signed in and a schedule is published. |
+| Basic flow | The student selects a section and clicks Register. The system identifies the student from their session (not from a form field), checks the business rules, creates the registration, and decrements the available seats in the same transaction. |
 | Alternate flows | A1 section full (rejected); A2 already registered (rejected). |
 | Business rules | **BR7:** Registrations may never exceed a section's capacity. **BR-dup:** A student may not hold two active registrations for the same section. |
 
@@ -112,7 +115,7 @@ Full document: [Lab2_SRS/eRegistrar_SRS.pdf](Lab2_SRS/eRegistrar_SRS.pdf)
 |---|---|
 | NFR1 | Schedule and registration pages respond within 2 seconds under normal load. |
 | NFR3 | Section capacity is enforced correctly under concurrent registration. |
-| NFR4 | Every operation is authorized by role; a student may access only their own registrations. *(Not yet implemented, see Limitations.)* |
+| NFR4 | Every operation is authorized by role; a student may access only their own registrations. Implemented: every route requires sign-in, and the student registering is always taken from the authenticated session, never a form field. |
 | NFR6 | The system runs on any platform with a Java 11+ runtime and a relational database. |
 
 Full requirement set, remaining use cases, and all business rules (BR1–BR9)
@@ -158,6 +161,7 @@ in [§7](#7-application-layer-structure) below.
 | View | Thymeleaf |
 | Persistence | Spring Data JPA, Hibernate |
 | Database | H2 (file-based, embedded) |
+| Security | Spring Security, BCrypt password hashing |
 | Build | Maven, via the Maven Wrapper (`mvnw`) |
 | Testing | JUnit 5, AssertJ, Spring Boot Test |
 
@@ -169,7 +173,11 @@ Source: [Lab7_SpringBoot/eregistrar/src/main/java/edu/mum/cs/cs425/eregistrar/](
 eregistrar
 ├── controller
 │   ├── HomeController.java          GET /, /about (renders the published schedule)
-│   └── RegistrationController.java  POST /register (UC4 write path)
+│   ├── RegistrationController.java  POST /register (UC4 write path)
+│   └── LoginController.java         GET /login (custom sign-in page)
+├── security
+│   ├── SecurityConfig.java          route protection, BCrypt, login/logout
+│   └── StudentUserDetailsService.java  loads a Student as a login principal
 ├── service
 │   ├── ScheduleService.java         read side: published sections
 │   ├── RegistrationService.java     UC4 business rules (BR7, duplicate check)
@@ -187,14 +195,16 @@ eregistrar
 │   ├── Faculty.java
 │   ├── Block.java
 │   ├── Section.java                 capacity, registeredCount, @Version
-│   ├── Student.java
+│   ├── Student.java                 studentId, name, email, passwordHash, role
+│   ├── Role.java                    STUDENT, ADMIN
 │   ├── Registration.java
 │   └── RegistrationStatus.java
-└── DataSeeder.java                  seeds sample data on startup
+└── DataSeeder.java                  seeds sample data + hashed passwords on startup
 ```
 
-**Controller layer.** `HomeController` and `RegistrationController` handle
-HTTP requests and view rendering only; no business logic lives here.
+**Controller layer.** `HomeController`, `RegistrationController` and
+`LoginController` handle HTTP requests and view rendering only; no business
+logic lives here.
 
 **Service layer.** `RegistrationService.register()` is the one method that
 implements UC4: it looks up the student and section, rejects a duplicate
@@ -212,6 +222,21 @@ commit would fail with `OptimisticLockingFailureException` rather than
 silently over-filling the section. `RegistrationController` catches that
 exception and reports it to the student as a normal "section full" error.
 
+### Security (authentication and authorization)
+
+Every route except `/login` and static assets requires a signed-in student
+(`SecurityConfig`). Passwords are never stored in plain text: `Student`
+holds a BCrypt hash, and `StudentUserDetailsService` loads a student by
+their `studentId` (used as the login username) for Spring Security to check
+against.
+
+Authorization is enforced structurally, not just at the login screen: the
+student a registration is created for comes from the authenticated
+session (`Principal.getName()` in `RegistrationController`), never from a
+request parameter. A student cannot register on behalf of anyone else, no
+matter what a request contains, which is exactly what NFR4 in the SRS asks
+for.
+
 ## 8. Installation, Configuration and Execution
 
 Prerequisites: JDK 11+. Maven is not required system-wide; the project
@@ -223,9 +248,11 @@ cd eregistrar/Lab7_SpringBoot/eregistrar
 ./mvnw spring-boot:run
 ```
 
-Open <http://localhost:8081>. Sample students `S1001` through `S1005` are
-seeded on startup (see [DataSeeder](Lab7_SpringBoot/eregistrar/src/main/java/edu/mum/cs/cs425/eregistrar/DataSeeder.java));
-enter one of those IDs in a section's "Register" form to exercise UC4.
+Open <http://localhost:8081>, which redirects to a sign-in page. Sample
+students `S1001` through `S1005` are seeded on startup (see
+[DataSeeder](Lab7_SpringBoot/eregistrar/src/main/java/edu/mum/cs/cs425/eregistrar/DataSeeder.java)),
+all with the password `password123`. Sign in as one and click Register on
+any open section to exercise UC4.
 
 To build an executable JAR instead:
 
@@ -260,6 +287,17 @@ in-memory H2 database, isolated from the dev database:
 | `registeringAnUnknownStudentFails` | Error case (unknown student) |
 | `droppingARegistrationFreesTheSeat` | Normal case (drop) |
 
+`SecurityTest` covers the security extra credit: that protection is real,
+not just a login page nothing enforces.
+
+| Test | Case |
+|---|---|
+| `anonymousRequestToTheHomepageIsRedirectedToLogin` | An unauthenticated visitor cannot see the schedule |
+| `anonymousRequestToRegisterIsRedirectedToLogin` | ...nor register, even by posting directly to the endpoint |
+| `correctCredentialsLogIn` | Normal case: a seeded student's real password logs in |
+| `wrongPasswordIsRejected` | Error case: a valid student ID with the wrong password fails |
+| `unknownStudentIdIsRejected` | Error case: a login attempt for a student who doesn't exist fails |
+
 `HomeControllerTest` covers the read side: the homepage renders the named
 banner and lists sections with seat availability.
 
@@ -269,22 +307,29 @@ Run the suite:
 cd Lab7_SpringBoot/eregistrar && ./mvnw test
 ```
 
-Evidence both suites pass:
+Evidence all three suites pass:
 
 ```
 Tests run: 2, Failures: 0, Errors: 0, Skipped: 0 - in edu.mum.cs.cs425.eregistrar.HomeControllerTest
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0 - in edu.mum.cs.cs425.eregistrar.security.SecurityTest
 Tests run: 5, Failures: 0, Errors: 0, Skipped: 0 - in edu.mum.cs.cs425.eregistrar.service.RegistrationServiceTest
 ```
 
 ## 11. Screenshots
 
-Published schedule, live and seeded with sample data:
+Sign-in page. Nothing past this point is reachable without a valid student
+ID and password:
+
+![Sign in](Lab7_SpringBoot/eregistrar/screenshots/login.png)
+
+Published schedule after signing in as S1001 (Alex Rivera). The userbar in
+the top right shows who's signed in and a real sign-out button:
 
 ![Homepage](Lab7_SpringBoot/eregistrar/screenshots/homepage.png)
 
-A successful registration (student S1001 registers for CS425; the seat
-count and the flash confirmation both come from the real transaction, not
-mocked data):
+A successful registration (registering for CS425; the seat count and the
+flash confirmation both come from the real transaction, not mocked data,
+and the row now shows "Registered" instead of a button):
 
 ![Registration succeeded](Lab7_SpringBoot/eregistrar/screenshots/registration_success.png)
 
@@ -295,10 +340,14 @@ rejected (BR-dup), with the seat count unchanged:
 
 ## 12. Known Limitations and Future Improvements
 
-- **Authentication and authorization (NFR4) are not implemented.** Anyone
-  who can reach the app can register any student ID. A production version
-  would add Spring Security with the campus identity provider, as described
-  in the architecture document.
+- **The app has its own login instead of a real identity provider.** This is
+  intentional for a course project (the architecture document specifies the
+  campus identity provider for a production deployment); the login here is
+  a real, working Spring Security setup with hashed passwords, just not
+  federated to an external provider.
+- **Only one role is actually exercised.** `Role.ADMIN` exists on the
+  `Student` entity and in `StudentUserDetailsService`'s granted authorities,
+  but no admin-only screen has been built yet to make use of it.
 - **Only UC4 (Register for Course) is wired to persistence end to end.** UC1
   through UC3, UC5 and UC6 are modelled in the SRS/architecture/diagrams but
   are not yet backed by working screens; UC3 (Generate Term Schedule) is the
@@ -311,9 +360,8 @@ rejected (BR-dup), with the seat count unchanged:
   `spring.jpa.hibernate.ddl-auto=update`, which is fine for a course project
   but not for a real deployment; the architecture document specifies Flyway
   for that.
-- **No cloud deployment.** The app runs locally only.
-- **Security and cloud deployment extra credit were not attempted** in this
-  submission, given the time available.
+- **No cloud deployment.** The app runs locally only; that extra-credit item
+  was not attempted, given the time available.
 
 ## 13. Course Lab Deliverables
 

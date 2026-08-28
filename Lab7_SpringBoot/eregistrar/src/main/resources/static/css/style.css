@@ -54,6 +54,31 @@ nav a {
 
 nav a:hover { text-decoration: underline; }
 
+.userbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.6rem;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0.5rem 1.25rem 0;
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
+.userbar form { margin: 0; }
+
+.userbar button {
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+}
+
 main {
     max-width: 860px;
     margin: 0 auto;

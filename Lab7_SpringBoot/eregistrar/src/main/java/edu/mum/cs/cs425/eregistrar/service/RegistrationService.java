@@ -7,7 +7,10 @@ import edu.mum.cs.cs425.eregistrar.model.Student;
 import edu.mum.cs.cs425.eregistrar.repository.RegistrationRepository;
 import edu.mum.cs.cs425.eregistrar.repository.SectionRepository;
 import edu.mum.cs.cs425.eregistrar.repository.StudentRepository;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,6 +60,17 @@ public class RegistrationService {
 
         Registration registration = new Registration(student, section);
         return registrationRepository.save(registration);
+    }
+
+    /** Section ids the given student currently holds a confirmed registration for. */
+    @Transactional(readOnly = true)
+    public Set<Long> getRegisteredSectionIds(String studentId) {
+        return studentRepository.findByStudentId(studentId)
+                .map(student -> registrationRepository.findByStudentAndStatus(student, RegistrationStatus.CONFIRMED))
+                .orElse(List.of())
+                .stream()
+                .map(registration -> registration.getSection().getId())
+                .collect(Collectors.toSet());
     }
 
     @Transactional

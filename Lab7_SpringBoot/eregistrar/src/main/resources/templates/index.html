@@ -18,6 +18,14 @@
     <a th:href="@{/about}">About</a>
 </nav>
 
+<div class="userbar">
+    Signed in as <strong th:text="${studentName}">Student</strong>
+    (<span th:text="${studentId}">S1001</span>)
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">Sign out</button>
+    </form>
+</div>
+
 <main>
     <div th:if="${flashMessage}"
          th:class="${flashType == 'success'} ? 'flash flash-success' : 'flash flash-error'"
@@ -65,9 +73,12 @@
                     </span>
                 </td>
                 <td>
-                    <form class="register-form" th:action="@{/register}" method="post">
+                    <span th:if="${registeredSectionIds.contains(section.id)}" class="pill pill-open">
+                        Registered
+                    </span>
+                    <form th:unless="${registeredSectionIds.contains(section.id)}"
+                          class="register-form" th:action="@{/register}" method="post">
                         <input type="hidden" name="sectionId" th:value="${section.id}">
-                        <input type="text" name="studentId" placeholder="Student ID" required>
                         <button type="submit" th:disabled="${!section.hasAvailableSeat()}">Register</button>
                     </form>
                 </td>
@@ -75,8 +86,7 @@
             </tbody>
         </table>
         <p class="meta">
-            Sample students: S1001 through S1005 (seeded on startup, see
-            <code>DataSeeder</code>).
+            Registering always registers the account you're signed in as.
         </p>
     </section>
 </main>
